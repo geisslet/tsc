@@ -42,7 +42,7 @@ function tscApi ($http, $q) {
       });
     };
 
-    this.get = function () {
+    this.getDebattes = function () {
         $http.get('data/all_debates.json')
             .success(function(response) {
                 return response.data;

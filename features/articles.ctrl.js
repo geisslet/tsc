@@ -1,6 +1,12 @@
-angular.module('quappe')
-    .controller('quappeBrowseCtrl', quappeBrowseCtrl);
+angular.module('tsc')
+    .controller('tscArticlesCtrl', tscArticlesCtrl);
 
-function quappeBrowseCtrl(){
-        
-};
+tscArticlesCtrl.init('tscApi');
+function tscArticlesCtrl(tscApi){
+ 
+	var vm = this;
+
+	vm.activate = function _activate(){
+		console.log('tscArticlesCtrl');
+	};
+}

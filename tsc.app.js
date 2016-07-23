@@ -6,7 +6,7 @@
 */ 
 
 var tscapp = angular 
-    .module('tcp', ['ngRoute'])
+    .module('tsc', ['ngRoute'])
     .config(route);
 
 function route($routeProvider){
