@@ -7,7 +7,7 @@
         <!-- 3rd party  -->
         <script type="text/javascript" src="bower_components/angular/angular.min.js"></script>
         <script type="text/javascript" src="bower_components/angular-route/angular-route.min.js"></script>
-        <!--script type="text/javascript" src="bower_components/elasticsearch/elasticsearch.angular.js"></script-->
+        <!--script type="text/javascript" src=".bower_components/elasticsearch/elasticsearch.angular.js"></script-->
         
         <!-- my app script -->        
         <script type="text/javascript" src="tsc.app.js"></script>
@@ -16,25 +16,25 @@
         <script type="text/javascript" src="tsc.api.js"></script>
         
         <!-- my controller scripts relate on services -->
-        <!--script type="text/javascript" src="features/quappe.hello.ctrl.js"></script>
-        <script type="text/javascript" src="features/quappe.browse.ctrl.js"></script>
-        <script type="text/javascript" src="features/quappe.sign-in.ctrl.js"></script>
+        <script type="text/javascript" src="features/articles.ctrl.js"></script>
+        <script type="text/javascript" src="features/debattes.ctrl.js"></script>
+        <!--script type="text/javascript" src="features/quappe.sign-in.ctrl.js"></script>
         <script type="text/javascript" src="features/quappe.sign-up.ctrl.js"></script>
         <script type="text/javascript" src="features/quappe.statement.detail.ctrl.js"></script>
         <script type="text/javascript" src="features/quappe.statement.post.ctrl.js"></script-->
     
         <!-- styles -->
-        <!--link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.css">
-        <link rel="stylesheet" type="text/css" href="tsc.css"-->
+        <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.css">
+        <!--link rel="stylesheet" type="text/css" href="tsc.css"-->
 
         <link rel="icon" href="resources/favicon.svg" type="image/png" sizes="16x16">
     </head>
 
-    <body ng-app="tsc">
+    <body ng-app="tsc" class="form-control">
 
         <div class="row navigation-bar" >
             <div class="btn-group" role="group" >      
-                <a href="#hello" class="btn btn-default btn-nav glyphicon glyphicon-home" type="button"></a>
+                <a href="#debattes" class="btn btn-default btn-nav glyphicon glyphicon-home" type="button"></a>
                 <!--a href="#browse" class="btn btn-default btn-nav glyphicon glyphicon-search" type="button"></a>
                 <a href="#signin" class="btn btn-default btn-nav" type="button">sign in</a>
                 <a href="#signup" class="btn btn-default btn-nav" type="button">sign up</a>
@@ -43,6 +43,8 @@
                 <a href="#detail" class="btn btn-default btn-nav" type="button">detail</a-->
             </div>
         </div>
+
+        <div class="row"><label>Themen</label>Politik</div>
 
         <div class="row">
             <div class="centered-container">
