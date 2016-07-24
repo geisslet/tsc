@@ -1,5 +1,5 @@
 <!doctype html>
-<html>
+<html ng-app="tsc" ng-controller="tscAppCtrl as vm" ng-init="vm.activate()">
 
     <head>
         <title>tsc</title>
@@ -17,34 +17,33 @@
         
         <!-- my controller scripts relate on services -->
         <script type="text/javascript" src="features/articles.ctrl.js"></script>
-        <script type="text/javascript" src="features/debattes.ctrl.js"></script>
-        <!--script type="text/javascript" src="features/quappe.sign-in.ctrl.js"></script>
-        <script type="text/javascript" src="features/quappe.sign-up.ctrl.js"></script>
-        <script type="text/javascript" src="features/quappe.statement.detail.ctrl.js"></script>
-        <script type="text/javascript" src="features/quappe.statement.post.ctrl.js"></script-->
+        <script type="text/javascript" src="features/debates.ctrl.js"></script>
     
         <!-- styles -->
-        <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.css">
-        <!--link rel="stylesheet" type="text/css" href="tsc.css"-->
+        <!--link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.css"-->
+        <link rel="stylesheet" type="text/css" href="bower_components/spectre.css/dist/spectre.min.css">
+        <link rel="stylesheet" type="text/css" href="bower_components/font-awesome/css/font-awesome.min.css">
+        <link rel="stylesheet" type="text/css" href="tsc.css">
 
         <link rel="icon" href="resources/favicon.svg" type="image/png" sizes="16x16">
     </head>
 
-    <body ng-app="tsc" class="form-control">
+    <header class="navbar">
+        <section>
 
-        <div class="row navigation-bar" >
-            <div class="btn-group" role="group" >      
-                <a href="#debattes" class="btn btn-default btn-nav glyphicon glyphicon-home" type="button"></a>
-                <!--a href="#browse" class="btn btn-default btn-nav glyphicon glyphicon-search" type="button"></a>
-                <a href="#signin" class="btn btn-default btn-nav" type="button">sign in</a>
-                <a href="#signup" class="btn btn-default btn-nav" type="button">sign up</a>
-                <a href="#my" class="btn btn-default btn-nav" type="button">my</a>
-                <a href="#post" class="btn btn-default btn-nav" type="button">post</a>
-                <a href="#detail" class="btn btn-default btn-nav" type="button">detail</a-->
-            </div>
-        </div>
+            <figure class="avatar avatar-xl">
+                <img src="resources/favicon.svg" />
+            </figure>
+                        
+            <label class="navbar-brand">Themen:</label>
 
-        <div class="row"><label>Themen</label>Politik</div>
+        </section>
+        <section ng-repeat="(key, value) in vm.topics">
+            <a class="btn btn-link badge" data-badge="9" href="#debates" ng-value="$key">{{value.title}}</a>    
+        </section>
+    </header>
+
+    <body  class="form-control">
 
         <div class="row">
             <div class="centered-container">
