@@ -3,8 +3,8 @@
     <section class="container grid-960">
     
     	<div class="columns">
-    		<div class="column col-4">
-		        <div class="card" ng-repeat="(key, value) in vm.debattes">
+    		<div class="column col-4" ng-repeat="(key, value) in vm.debattes">
+		        <div class="card">
 
 		        	<div class="card-header">
 		        	    <h4 class="card-title">{{value.title}}</h4>
@@ -17,7 +17,5 @@
 				</div>
 			</div>
 		</div>
-
-		{{vm.debattes}}
 	</section>
 </div>
