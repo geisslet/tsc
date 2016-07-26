@@ -19,7 +19,7 @@ function tscApi ($http, $q) {
             $http.get('data/all_debates.json')
                 .then(function success(response){
                     
-                    console.log('mainfile ' + JSON.stringify(mainFile));
+                   // console.log('mainfile ' + JSON.stringify(mainFile));
 
                     mainFile = response.data;
                     resolve(mainFile);
@@ -29,7 +29,7 @@ function tscApi ($http, $q) {
             });
         });
     }
-   
+
     this.getTopics = function _topics() {
         console.log("tscApi.getTopics");
         
@@ -45,7 +45,7 @@ function tscApi ($http, $q) {
         });
     };
 
-    this.getDebattes = function () {
+    this.getDebates = function _debates(topicId) {
         console.log("tscApi.getDebattes");
 
         return $q(function(resolve, reject){
@@ -53,6 +53,7 @@ function tscApi ($http, $q) {
             if (mainFile.length === 0){
                 getMainFile().then(function success(response){
                         resolve(mainFile.debates);
+                        //resolve(JSLINQ(mainFile.debates).Where(function(item){ return item.topic == topicId; }));
                     });            
             } else {
                 resolve(mainFile.debates);
@@ -60,7 +61,7 @@ function tscApi ($http, $q) {
         });
     };
 
-    this.getArticles = function () {
+    this.getArticles = function _articles(debateId) {
         console.log("tscApi.getArticles");
         if (mainFile.length === 0){
             getMainFile().then(function success(response){
@@ -76,9 +77,29 @@ function tscApi ($http, $q) {
         }
     };
 
-    this.getArticle = function (id){
+    this.getThesis = function _thesis(articelId){
         console.log("tscApi.getArticle: " + id);
-        return $http.get('data/' + id + '.json');  
+        return $http.get('data/' + articleId + '.json');  
     };
 
+    this.getVotes = function _votes(){
+
+    };
+
+    this.getAuthors = function (){
+        console.log("tscApi.getAuthors");
+        if (mainFile.length === 0){
+            getMainFile().then(function success(response){
+                return $q(function(resolve, reject){
+                    resolve(mainFile.authors);
+                });
+
+            });            
+        } else { 
+            return $q(function(resolve, reject){
+                resolve(mainFile.articles);
+            });
+        }
+
+    };
 }
