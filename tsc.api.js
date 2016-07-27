@@ -1,15 +1,41 @@
 // Service
-
 var api = angular
     .module('tsc')
-    .service('tscApi', tscApi);
+    .service('tscApi', tscApi)
+    .filter('myFilter', function () {
+        return function (items, search) {
+            
+            return items.topic === search;
 
-tscApi.$inject = ['$http','$q']; 
-function tscApi ($http, $q) {
+            var result = [];
+            angular.forEach(items, function (value, key) {
+
+                console.log('value: ' + JSON.stringify(value) + ', key: ' + JSON.stringify(key) + ', search: ' + JSON.stringify(search));
+
+                angular.forEach(value, function (value2, key2) {
+                    console.log('value2: ' + JSON.stringify(value2) + ', key2: ' + JSON.stringify(key2));
+    
+                    if (value2 === search) {
+
+                        console.log('push back: ' + JSON.stringify(value) + ' | ' + JSON.stringify(value2) );
+
+                        result.push(value);
+                    }
+                });
+            });
+            return result;
+        };
+    });
+
+
+// service implementation
+tscApi.$inject = ['$http','$q', '$filter']; 
+function tscApi ($http, $q, $filter) {
 
     console.log('tscApi instanciated.');
 
     var mainFile = [];
+    var imgurl = 'https://causa.tagesspiegel.de';
 
     function getMainFile(){
         console.log("tscApi.getMainFile");
@@ -56,7 +82,7 @@ function tscApi ($http, $q) {
                         //resolve(JSLINQ(mainFile.debates).Where(function(item){ return item.topic == topicId; }));
                     });            
             } else {
-                resolve(mainFile.debates);
+                resolve($filter('myFilter')(mainFile.debates,{ "topic": topicId }));
             }
         });
     };
@@ -103,3 +129,6 @@ function tscApi ($http, $q) {
 
     };
 }
+
+
+
