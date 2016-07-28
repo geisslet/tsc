@@ -1,32 +1,7 @@
 // Service
 var api = angular
     .module('tsc')
-    .service('tscApi', tscApi)
-    .filter('myFilter', function () {
-        return function (items, search) {
-            
-            return items.topic === search;
-
-            var result = [];
-            angular.forEach(items, function (value, key) {
-
-                console.log('value: ' + JSON.stringify(value) + ', key: ' + JSON.stringify(key) + ', search: ' + JSON.stringify(search));
-
-                angular.forEach(value, function (value2, key2) {
-                    console.log('value2: ' + JSON.stringify(value2) + ', key2: ' + JSON.stringify(key2));
-    
-                    if (value2 === search) {
-
-                        console.log('push back: ' + JSON.stringify(value) + ' | ' + JSON.stringify(value2) );
-
-                        result.push(value);
-                    }
-                });
-            });
-            return result;
-        };
-    });
-
+    .service('tscApi', tscApi);
 
 // service implementation
 tscApi.$inject = ['$http','$q', '$filter']; 
@@ -82,25 +57,24 @@ function tscApi ($http, $q, $filter) {
                         //resolve(JSLINQ(mainFile.debates).Where(function(item){ return item.topic == topicId; }));
                     });            
             } else {
-                resolve($filter('myFilter')(mainFile.debates,{ "topic": topicId }));
+                // resolve($filter('myFilter')(mainFile.debates,{ "topic": topicId }));
+                resolve(mainFile.debates);
             }
         });
     };
 
     this.getArticles = function _articles(debateId) {
         console.log("tscApi.getArticles");
-        if (mainFile.length === 0){
-            getMainFile().then(function success(response){
-                return $q(function(resolve, reject){
-                    resolve(mainFile.articles);
-                });
 
-            });            
-        } else { 
-            return $q(function(resolve, reject){
+        return $q(function(resolve, reject){ 
+            if (mainFile.length === 0){
+                getMainFile().then(function success(response){
+                        resolve(mainFile.articles);
+                    });            
+            } else {
                 resolve(mainFile.articles);
-            });
-        }
+            }
+        });
     };
 
     this.getThesis = function _thesis(articelId){
@@ -109,24 +83,32 @@ function tscApi ($http, $q, $filter) {
     };
 
     this.getVotes = function _votes(){
+        console.log("tscApi.getVotes");
 
+        return $q(function(resolve, reject){ 
+            if (mainFile.length === 0){
+                getMainFile().then(function success(response){
+                        resolve(mainFile.votes);
+                    });            
+            } else {
+                resolve(mainFile.votes);
+            }
+        });
     };
 
-    this.getAuthors = function (){
+    this.getAuthors = function _authors(){
+
         console.log("tscApi.getAuthors");
-        if (mainFile.length === 0){
-            getMainFile().then(function success(response){
-                return $q(function(resolve, reject){
-                    resolve(mainFile.authors);
-                });
 
-            });            
-        } else { 
-            return $q(function(resolve, reject){
-                resolve(mainFile.articles);
-            });
-        }
-
+        return $q(function(resolve, reject){ 
+            if (mainFile.length === 0){
+                getMainFile().then(function success(response){
+                        resolve(mainFile.authors);
+                    });            
+            } else {
+                resolve(mainFile.authors);
+            }
+        });
     };
 }
 

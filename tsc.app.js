@@ -46,6 +46,10 @@ function route($routeProvider){
             templateUrl: 'features/article.html',
             name: 'article'
         })
+        .when('/authors',{
+            templateUrl: 'features/authors.html',
+            name: 'authors'
+        })
         .otherwise({
             redirectTo: 'features/debates.html',
             name: 'debate'

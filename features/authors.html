@@ -1,0 +1,28 @@
+<div ng-controller="tscAuthorsCtrl as vm" ng-init="vm.activate()">
+
+	<section class="container grid-960">
+    
+    	<div class="columns">
+    		<div class="column col-4" ng-repeat="(key, value) in vm.authors">
+		        <div class="card">
+
+		        	<div class="card-header">
+		        	    <h4 class="card-title">{{value.first_name}} {{value.last_name}}</h4>
+		        		<h6 class="card-meta">{{value.organisation}}</h6>
+		        	</div>
+		        	<div class="card-body">
+		        		<figure class="avatar avatar-xl">
+		        		https://causa.tagesspiegel.de{{value.portrait}}
+    						<img ng-src="https://causa.tagesspiegel.de{{value.portrait}}" />
+						</figure>
+					</div>
+		    		<div class="card-footer">
+		        		<a class="btn btn-default" href="">zeig alles</a>
+		    		</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	{{vm.authors}}
+</div>
