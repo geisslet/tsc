@@ -1,7 +1,9 @@
 <div ng-controller="tscDebatesCtrl as vm" ng-init="vm.activate()">
     
-	{{vm.topicId}}
-
+	
+	<span class="badge" data-badge="{{vm.debattes.length}}">
+	    {{vm.topicId}}
+	</span>
     <section class="container grid-960">
     
     	<div class="columns">
@@ -14,10 +16,14 @@
 		        	</div>
 		        	<div class="card-body">{{value.teaser}} ...</div>
 		    		<div class="card-footer">
-		        		<a class="btn btn-default" href="">zeig alles</a>
+		        		<a class="btn btn-default" href="#articles/value.id">zeig alles</a>
 		    		</div>
 				</div>
 			</div>
 		</div>
 	</section>
+
+	<br>
+	<hr>
+	{{vm.debattes}}
 </div>

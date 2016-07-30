@@ -22,7 +22,7 @@ function tscApi ($http, $q, $filter) {
                     
                    // console.log('mainfile ' + JSON.stringify(mainFile));
 
-                    mainFile = response.data;
+                    mainFile =  response.data;
                     resolve(mainFile);
 
             }, function fail(response){
@@ -46,19 +46,41 @@ function tscApi ($http, $q, $filter) {
         });
     };
 
+
+    function filterListToArray(objlist, key, value){
+        var array = [];
+        for(var item in objlist){
+
+            // skip loop if the property is from prototype
+            if(!objlist.hasOwnProperty(item)) continue;
+
+            console.log(JSON.stringify(item));
+
+            if (objlist[item][key] === value){
+
+                var o = objlist[item];
+                o["id"] = item;
+                array.push(o);
+            }
+        }
+        return array;
+    }
     this.getDebates = function _debates(topicId) {
-        console.log("tscApi.getDebattes");
+        console.log("tscApi.getDebattes for " + topicId);
 
         return $q(function(resolve, reject){
  
             if (mainFile.length === 0){
                 getMainFile().then(function success(response){
-                        resolve(mainFile.debates);
+
+                        //resolve(mainFile.debates);
+                        resolve(filterListToArray(mainFile.debates, "topic", topicId));
                         //resolve(JSLINQ(mainFile.debates).Where(function(item){ return item.topic == topicId; }));
                     });            
             } else {
                 // resolve($filter('myFilter')(mainFile.debates,{ "topic": topicId }));
-                resolve(mainFile.debates);
+                //resolve(mainFile.debates);
+                resolve(filterListToArray(mainFile.debates, "topic", topicId));
             }
         });
     };

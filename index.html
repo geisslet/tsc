@@ -1,5 +1,5 @@
 <!doctype html>
-<html ng-app="tsc" ng-controller="tscAppCtrl as vm" ng-init="vm.activate()">
+<html ng-app="tsc" ng-controller="tscAppCtrl as vm" ng-init="vm.activate()" class="js csstransforms3d matchmedia">
 
     <head>
         <title>tsc</title>
@@ -30,7 +30,7 @@
         <link rel="icon" href="resources/favicon.svg" type="image/png" sizes="16x16">
     </head>
 
-    <header class="navbar">
+    <header class="navbar dp-header">
         <section class="columns">
             <figure class="avatar avatar-xl">
                 <img src="resources/favicon.svg" />
@@ -48,10 +48,16 @@
         </section>
     </header>
 
-    <body  class="form-control">
+    <body>
 
-        <div class="row">
-            <div class="centered-container">
+        <ul id=menu>
+            <li><a href="#L384">Section 1</a>
+            <li><a href="#details">Section 2</a>
+            <li><a href="#FAQ">Section 3</a>
+        </ul>
+
+        <div class="dp-page-wrapper">
+            <div>
                 <div ng-view></div>
             </div>
         </div>

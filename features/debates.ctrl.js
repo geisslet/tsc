@@ -12,7 +12,7 @@ function tscDebatesCtrl($log, tscApi, $routeParams){
 
 		$log.debug("tscDebatesCtrl.activate " + JSON.stringify($routeParams));
 
-		tscApi.getDebates().then(function success(response){
+		tscApi.getDebates(vm.topicId).then(function success(response){
 			$log.debug("tscDebatesCtrl " + response);
 			vm.debattes = response;
 		}, function fail(response){

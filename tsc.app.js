@@ -30,15 +30,15 @@ function route($routeProvider){
     console.log('tsc.app.viewhandling called');
 
     $routeProvider
-        .when('/debates',{
+        /*.when('/debates',{
             templateUrl: 'features/debates.html',
             name: 'debate'
-        })
+        })*/
         .when('/debates/:id',{
             templateUrl: 'features/debates.html',
             name: 'debate'
         })
-        .when('/articles',{
+        .when('/articles/:id',{
             templateUrl: 'features/articles.html',
             name: 'articles'
         })
