@@ -1,18 +1,31 @@
 <div ng-controller="tscArticlesCtrl as vm" ng-init="vm.activate()">
 	<span class="badge" data-badge="{{vm.articles.length}}"></span>
     <section class="container grid-960">
+
+    {{vm.debate}}
+
     
-    	<div class="columns">
-    		<div class="column col-4" ng-repeat="(key, value) in vm.articles">
+    	<div class="columns" ng-repeat="(key, value) in vm.articles">
+    		<div class="column col-12">
 		        <div class="card">
 
 		        	<div class="card-header">
+			        	<h4 class="card-title">{{value.headline}}</h4>
+			        	<h4 class="card-title">{{value.subheadline}}</h4>
 		        	    <h4 class="card-title">{{value.title}}</h4>
 		        		<h6 class="card-meta">{{value.published.date}}</h6>
 		        	</div>
 		        	<div class="card-body">{{value.teaser}} ...</div>
 		    		<div class="card-footer">
-		        		<a class="btn btn-default" href="#article/value.id">zeig alles</a>
+		        		<!--a class="btn btn-default" href="#article/{{value.id}}">zeig alles</a-->
+		        		<a class="btn btn-default" ng-click="bMore = !bMore">
+		        			<i class="fa fa-plus" ng-hide="bMore"> lesen</i>
+		        			<i class="fa fa-minus" ng-show="bMore"> danke</i>
+		        		</a>
+						
+		        		<div ng-show="bMore"> 
+		        			<div ng-bind-html=value.text></div>
+		        		</div>
 		    		</div>
 				</div>
 			</div>
@@ -21,5 +34,5 @@
 
 	<br>
 	<hr>
-	{{vm.debattes}}
+	{{vm.articles}}
 </div>

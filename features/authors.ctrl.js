@@ -15,10 +15,21 @@ function tscAuthorsCtrl($log, tscApi, $routeParams){
 		tscApi.getAuthors().then(function success(response){
 			$log.debug("tscAuthorsCtrl " + response);
 			vm.authors = response;
+
 		}, function fail(response){
-			$log.debug("tscAuthorsCtrl.fail: " + response);	
+			alert("tscAuthorsCtrl.fail: " + response);	
 		});
 		
+	};
+
+	vm.details = function _details(){
+		tscApi.getAuthors().then(function success(response){
+			$log.debug("tscAuthorsCtrl " + response);
+			vm.authors = response;
+
+		}, function fail(response){
+			alert("tscAuthorsCtrl.fail: " + response);	
+		});
 	};
 
 }

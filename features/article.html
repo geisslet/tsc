@@ -1,0 +1,25 @@
+<div ng-controller="tscArticleCtrl as vm" ng-init="vm.activate()">
+	
+    <section class="container grid-960">
+    
+    	<div class="columns">
+    		
+	        <div class="card">
+
+	        	<div class="card-header">
+	        	    <h4 class="card-title">{{vm.article.title}}</h4>
+	        		<h6 class="card-meta">{{vm.article.published.date}}</h6>
+	        	</div>
+	        	<div class="card-body" ng-bind=vm.article.text></div>
+	    		<div class="card-footer">
+	        		
+	    		</div>
+			</div>
+			
+		</div>
+	</section>
+
+	<br>
+	<hr>
+	{{vm.article}}
+</div>

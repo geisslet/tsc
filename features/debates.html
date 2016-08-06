@@ -4,24 +4,34 @@
 	<span class="badge" data-badge="{{vm.debattes.length}}">
 	    {{vm.topicId}}
 	</span>
+
+	<a href="#map"><span class="dp-badge">{{vm.debattes.length}}</span> Artikel</a>
     <section class="container grid-960">
     
-    	<div class="columns">
-    		<div class="column col-4" ng-repeat="(key, value) in vm.debattes">
+    	<div class="columns" ng-repeat="(key, value) in vm.debattes">
+    		<div class="column col-12">
 		        <div class="card">
 
 		        	<div class="card-header">
+		        		<h5 class="card-meta"><i class="fa fa-comments" aria-hidden="true"></i>Debatte</h5> 
 		        	    <h4 class="card-title">{{value.title}}</h4>
 		        		<h6 class="card-meta">{{value.published.date}}</h6>
 		        	</div>
 		        	<div class="card-body">{{value.teaser}} ...</div>
 		    		<div class="card-footer">
-		        		<a class="btn btn-default" href="#articles/value.id">zeig alles</a>
+		        		<a class="btn btn-default" href="#articles/{{value.id}}">zu den Artikeln ... </a>
 		    		</div>
 				</div>
 			</div>
 		</div>
 	</section>
+
+	<!--div class="row">
+		<svg class="column col-12">
+			<circle cx="25" cy="25" r="25" fill="purple" />
+
+		</svg>
+	</div-->
 
 	<br>
 	<hr>
