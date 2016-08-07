@@ -1,31 +1,48 @@
 <div ng-controller="tscArticlesCtrl as vm" ng-init="vm.activate()">
 	<span class="badge" data-badge="{{vm.articles.length}}"></span>
+
+	<section class="container grid-960">
+
+		<h3>{{vm.debate.title}}</h3>
+		<figure class="avatar avatar-lg" data-initial="{{vm.articles.length}}" style="background-color: #5764c6;"></figure> Artikel in der Debatte 
+		<div ng-show="bTeaser">
+			<h4>{{vm.debate.teaser}}</h4>
+			<h5>{{vm.debate.published.date}}</h5>
+		</div>
+	</section>
+
+
     <section class="container grid-960">
-
-    {{vm.debate}}
-
     
     	<div class="columns" ng-repeat="(key, value) in vm.articles">
     		<div class="column col-12">
 		        <div class="card">
 
 		        	<div class="card-header">
+		        		<i class="fa fa-file-text-o" aria-hidden="true"></i> Artikel
+
 			        	<h4 class="card-title">{{value.headline}}</h4>
-			        	<h4 class="card-title">{{value.subheadline}}</h4>
-		        	    <h4 class="card-title">{{value.title}}</h4>
-		        		<h6 class="card-meta">{{value.published.date}}</h6>
+			        	<h4 class="card-meta">{{value.subheadline}}</h4>
+		        	    <!--h4 class="card-title">T: {{value.title}}</h4-->
+
 		        	</div>
-		        	<div class="card-body">{{value.teaser}} ...</div>
-		    		<div class="card-footer">
+		        	<div class="card-body">
+
+		        	    {{value.teaser}} <div ng-hide="bMore">...</div>
+		        		<div ng-show="bMore">
+		        			<br> 
+		        			<div ng-bind-html=value.text></div>
+		        		</div>
+
 		        		<!--a class="btn btn-default" href="#article/{{value.id}}">zeig alles</a-->
 		        		<a class="btn btn-default" ng-click="bMore = !bMore">
 		        			<i class="fa fa-plus" ng-hide="bMore"> lesen</i>
 		        			<i class="fa fa-minus" ng-show="bMore"> danke</i>
 		        		</a>
-						
-		        		<div ng-show="bMore"> 
-		        			<div ng-bind-html=value.text></div>
-		        		</div>
+
+		        	</div>
+		    		<div class="card-footer">
+		        		<h6 class="card-meta">{{value.published.date}}</h6>
 		    		</div>
 				</div>
 			</div>

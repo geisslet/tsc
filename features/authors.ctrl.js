@@ -1,8 +1,8 @@
 angular.module('tsc')
     .controller('tscAuthorsCtrl', tscAuthorsCtrl);
 
-tscAuthorsCtrl.$inject = ['$log', 'tscApi', '$routeParams'];
-function tscAuthorsCtrl($log, tscApi, $routeParams){
+tscAuthorsCtrl.$inject = ['$log', 'tscApi', '$routeParams', '$sce'];
+function tscAuthorsCtrl($log, tscApi, $routeParams, $sce){
 	var vm = this;
 
 	vm.authors = {};

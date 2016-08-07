@@ -8,6 +8,8 @@ function tscDebatesCtrl($log, tscApi, $routeParams){
 	vm.debattes = {};
 	vm.topicId = $routeParams.id;
 
+	vm.class="";
+
 	vm.activate = function _activate(){
 
 		$log.debug("tscDebatesCtrl.activate " + JSON.stringify($routeParams));
@@ -21,6 +23,13 @@ function tscDebatesCtrl($log, tscApi, $routeParams){
 	
 
 		bubbleMe.make();	
+	};
+
+	vm.flip = function(){
+		if (vm.class=="flipped")
+			vm.class="";
+		else
+			vm.class="flipped";
 	};
 
 }

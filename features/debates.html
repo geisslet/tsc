@@ -1,26 +1,46 @@
 <div ng-controller="tscDebatesCtrl as vm" ng-init="vm.activate()">
     
 	
-	<span class="badge" data-badge="{{vm.debattes.length}}">
+	<!--span class="badge" data-badge="{{vm.debattes.length}}">
 	    {{vm.topicId}}
-	</span>
+	</span-->
 
-	<a href="#map"><span class="dp-badge">{{vm.debattes.length}}</span> Artikel</a>
+
+	<!--ul class="dp-debate-statistics">
+		<li>
+
+			
+		</li>
+	</ul-->
+	<section class="container grid-960">
+		<figure class="avatar avatar-lg" data-initial="{{vm.debattes.length}}" style="background-color: #5764c6;"></figure>Debatten
+	</section>
+
     <section class="container grid-960">
     
     	<div class="columns" ng-repeat="(key, value) in vm.debattes">
     		<div class="column col-12">
-		        <div class="card">
+		        
+		        <div class="card" ng-class="vm.class">
+			        
+			        <figure class="card-front">
+			        	<div class="card-header">
+			        		<a class="btn" ng-click="vm.flip()"> flip</a>
 
-		        	<div class="card-header">
-		        		<h5 class="card-meta"><i class="fa fa-comments" aria-hidden="true"></i>Debatte</h5> 
-		        	    <h4 class="card-title">{{value.title}}</h4>
-		        		<h6 class="card-meta">{{value.published.date}}</h6>
-		        	</div>
-		        	<div class="card-body">{{value.teaser}} ...</div>
-		    		<div class="card-footer">
-		        		<a class="btn btn-default" href="#articles/{{value.id}}">zu den Artikeln ... </a>
-		    		</div>
+			        		<h5 class="card-meta"><i class="fa fa-comments" aria-hidden="true"></i>Debatte</h5> 
+			        	    <h4 class="card-title">{{value.title}}</h4>
+			        		<h6 class="card-meta">{{value.published.date}}</h6>
+			        	</div>
+			        	<div class="card-body">{{value.teaser}} ...</div>
+			    		<div class="card-footer">
+			        		<a class="btn btn-default" href="#articles/{{value.id}}">zu den Artikeln ... </a>
+			    		</div>
+		    		</figure>
+
+		    		<figure class="card-back">
+		    			chart
+		    		</figure>
+
 				</div>
 			</div>
 		</div>

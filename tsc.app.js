@@ -6,8 +6,8 @@
 */ 
 
 var tscapp = angular 
-    //.module('tsc', ['ngRoute','ngSanitize'])
-    .module('tsc', ['ngRoute'])
+    .module('tsc', ['ngSanitize','ngRoute'])
+    //.module('tsc', ['ngRoute'])
     .controller('tscAppCtrl', tscAppCtrl)
     .config(route);
 
