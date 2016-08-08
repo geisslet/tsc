@@ -22,14 +22,4 @@ function tscAuthorsCtrl($log, tscApi, $routeParams, $sce){
 		
 	};
 
-	vm.details = function _details(){
-		tscApi.getAuthors().then(function success(response){
-			$log.debug("tscAuthorsCtrl " + response);
-			vm.authors = response;
-
-		}, function fail(response){
-			alert("tscAuthorsCtrl.fail: " + response);	
-		});
-	};
-
 }

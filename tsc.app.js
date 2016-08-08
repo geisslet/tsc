@@ -34,7 +34,6 @@ function tscAppCtrl(tscApi){
         });
 
     };
-
 }
 
 function route($routeProvider){
@@ -67,3 +66,4 @@ function route($routeProvider){
             name: 'debate'
         });
 }
+

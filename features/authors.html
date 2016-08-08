@@ -12,19 +12,27 @@
 		        	</div>
 		        	<div class="card-body">
 		        		<figure class="avatar avatar-xl">
-    						<img ng-src="https://causa.tagesspiegel.de{{value.images.portrait}}" />
+    						<img ng-src="{{value.images.portrait}}" />
 						</figure>
 					</div>
 
 					<ul class="tab tab-block">
-						<li class="tab-item"><a>Article</a></li>
-						<li class="tab-item"><a>Theses</a></li>
+						<li class="tab-item" ng-click="!bShow = bShow"><a>Article</a></li>
+						<li class="tab-item" ng-click="bShow = !bShow"><a>Theses</a></li>
 						<!--li class="tab-item"><a>zugestimmt</a></li>
 						<li class="tab-item"><a>abgelehnt</a></li-->
 					</ul>
 
-					<div class="authorout">
-						
+
+					<div class="authorout" ng-show="bShow" >
+						<ul ng-repeat="article in value.articles">
+							<li>{{article.headline}} {{article.published.date}}</li>
+						</ul>
+					</div>
+					<div class="authorout" ng-show="bShow">
+						<ul ng-repeat="these in value.theses">
+							<li>{{theses}} </li>
+						</ul>
 					</div>
 
 

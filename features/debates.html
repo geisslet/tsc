@@ -13,7 +13,11 @@
 		</li>
 	</ul-->
 	<section class="container grid-960">
-		<figure class="avatar avatar-lg" data-initial="{{vm.debattes.length}}" style="background-color: #5764c6;"></figure>Debatten
+		<h3>
+			<i class="fa fa-comments" aria-hidden="true"></i>
+			Debatten in {{vm.debattes.topic_title}}:
+			<figure class="avatar avatar-lg" data-initial="{{vm.debattes.length}}" style="background-color: #5764c6;"></figure> 
+		</h3>
 	</section>
 
     <section class="container grid-960">
@@ -23,11 +27,13 @@
 		        
 		        <div class="card" ng-class="vm.class">
 			        
+					<d3bubble-me chart-data="10,20,30,40,60"></d3bubble-me>
+
 			        <figure class="card-front">
 			        	<div class="card-header">
 			        		<a class="btn" ng-click="vm.flip()"> flip</a>
 
-			        		<h5 class="card-meta"><i class="fa fa-comments" aria-hidden="true"></i>Debatte</h5> 
+			        		<!--h5 class="card-meta"><i class="fa fa-comments" aria-hidden="true"></i>Debatte</h5--> 
 			        	    <h4 class="card-title">{{value.title}}</h4>
 			        		<h6 class="card-meta">{{value.published.date}}</h6>
 			        	</div>

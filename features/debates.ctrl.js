@@ -20,9 +20,6 @@ function tscDebatesCtrl($log, tscApi, $routeParams){
 		}, function fail(response){
 			$log.debug("tscDebatesCtrl.fail: " + response);	
 		});
-	
-
-		bubbleMe.make();	
 	};
 
 	vm.flip = function(){

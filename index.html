@@ -3,11 +3,6 @@
 
     <head>
         <title>tsc</title>
-
-
-        <!-- d3  -->
-        <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
-        <script type="text/javascript" src="tsc.d3.bubble.js"></script>
         
         <!-- 3rd party  -->
         <!--script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-sanitize.js"></script-->
@@ -29,6 +24,11 @@
         <script type="text/javascript" src="features/article.ctrl.js"></script>
         <script type="text/javascript" src="features/debates.ctrl.js"></script>
         <script type="text/javascript" src="features/authors.ctrl.js"></script> 
+
+
+        <!-- d3  -->
+        <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+        <script type="text/javascript" src="directives/d3bubbleMe.js"></script>
 
         <!-- styles -->
         <!--link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.css"-->
@@ -68,6 +68,12 @@
         <div class="dp-page-wrapper">
 
             <div id="sitebarvotes">
+
+            <!--fa fa-adjust-->
+            <h4><i class="fa fa-bullhorn" aria-hidden="true"></i> Thesen</h4>
+
+
+
                 <ul>
                     <li><a href="#L384">Section 1</a></li>
                     <li><a href="#details">Section 2</a></li>

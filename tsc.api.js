@@ -12,6 +12,7 @@ function tscApi ($http, $q, $filter) {
     var mainFile = [];
     var imgurl = 'https://causa.tagesspiegel.de';
 
+
     function getMainFile(){
         console.log("tscApi.getMainFile");
 
@@ -67,6 +68,8 @@ function tscApi ($http, $q, $filter) {
         });
     };
 
+
+    // we assume that this is called first all time!
     this.getTopics = function _topics() {
         console.log("tscApi.getTopics");
         
@@ -87,14 +90,10 @@ function tscApi ($http, $q, $filter) {
         console.log("tscApi.getDebattes for " + topicId);
 
         return $q(function(resolve, reject){
- 
-            if (mainFile.length === 0){
-                getMainFile().then(function success(response){
-                        resolve(filterListToArray(mainFile.debates, "topic", topicId));
-                    });            
-            } else {
-                resolve(filterListToArray(mainFile.debates, "topic", topicId));
-            }
+
+            var debates = filterListToArray(mainFile.debates, "topic", topicId);
+            debates["topic_title"] = mainFile.topics[topicId].title;
+            resolve(debates);
         });
     };
     this.getDebate = function _debate(debateId) {
@@ -102,13 +101,9 @@ function tscApi ($http, $q, $filter) {
 
         return $q(function(resolve, reject){
  
-            if (mainFile.length === 0){
-                getMainFile().then(function success(response){
-                        resolve(mainFile.debates[debateId]);
-                    });            
-            } else {
-                resolve(mainFile.debates[debateId]);
-            }
+                var debate = mainFile.debates[debateId];
+                debate["topic_title"] = mainFile.topics[debate.topic];
+                resolve(debate);
         });
     };
 
@@ -129,28 +124,21 @@ function tscApi ($http, $q, $filter) {
         console.log("tscApi.getArticles");
 
         return $q(function(resolve, reject){ 
-            if (mainFile.length === 0){
-                getMainFile().then(function success(response){
-                        resolve(filterListToArray(mainFile.articles, "author", authorId));
-                    //TODO   articles_theses
-                    });            
-            } else {
-                resolve(filterListToArray(mainFile.articles, "author", authorId));
-            }
+ 
+            var articles = filterListToArray(mainFile.articles, "author", authorId);
+
+            resolve(articles);
+ 
         });
     };
     this.getArticle = function _article(articleId) {
         console.log("tscApi.getArticle for " + articleId);
 
         return $q(function(resolve, reject){ 
-            if (mainFile.length === 0){
-                getMainFile().then(function success(response){
-                        resolve(mainFile.articles[articleId]);
-                    //TODO   articles_theses
-                    });            
-            } else {
-                resolve(mainFile.articles[articleId]);
-            }
+ 
+            var article = mainFile.articles[articleId]
+
+            resolve(article);
         });
     };
 
@@ -159,13 +147,14 @@ function tscApi ($http, $q, $filter) {
         console.log("tscApi.getVotes");
 
         return $q(function(resolve, reject){ 
-            if (mainFile.length === 0){
-                getMainFile().then(function success(response){
-                        resolve(mainFile.votes);
-                    });            
-            } else {
-                resolve(mainFile.votes);
+
+            var votes = mainFile.votes;
+
+            for(var v in votes){
+
             }
+
+            resolve(votes);
         });
     };
 
@@ -176,7 +165,26 @@ function tscApi ($http, $q, $filter) {
         return $q(function(resolve, reject){ 
             if (mainFile.length === 0){
                 getMainFile().then(function success(response){
-                        resolve(mainFile.authors);
+
+                        var authors = mainFile.authors;
+
+                        for(var a in authors){
+
+                            // update pic
+                            authors[a].images.portrait = 'https://causa.tagesspiegel.de'+authors[a].images.portrait;
+
+                            // org
+                            if (authors[a].organisation !== undefined){
+                                console.log("org id: " + authors[a].organisation);
+                                authors[a].organisation = mainFile.organisations[authors[a].organisation].name;
+                            }
+
+                            authors[a]["theses"] = filterListToArray(mainFile.theses, "author", a);
+                            authors[a]["articles"] = filterListToArray(mainFile.articles, "author", a);
+                            authors[a]["votes"] = filterListToArray(mainFile.votes, "author", a);
+                        }
+
+                        resolve(authors);
                     });            
             } else {
                 resolve(mainFile.authors);
@@ -184,23 +192,12 @@ function tscApi ($http, $q, $filter) {
         });
     };
 
-    this.getAuthorDetails = function _authorDetails(authorId){
-        var details = {};
-
-        // get articles
-        details["articles"] = filterListToArray(mainfile.articles, "author", authorId);
-
-        // get votes (including thesis content)
-        details["votes"] = filterListToArray(mainfile.votes, "author", authorId);
-
-        for (var i = 0; i<details.votes.length; i++) {
-            details.votes[i]["thesis_content"] = filterListToArray(mainfile.theses, "thesis", details.votes[i].thesis);
-        }
-
-        // get author theses
-        details["theses"] = filterListToArray(mainfile.theses, "author", authorId);
-        
-
+    this.getAuthor = function _author(authorId){
+        return $q(function(resolve, reject){
+            getAuthors().then(function success(response){
+              resolve(response.authorId);
+          });
+        });
     };
 }
 
