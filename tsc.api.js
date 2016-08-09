@@ -111,16 +111,10 @@ function tscApi ($http, $q, $filter) {
         console.log("tscApi.getArticles");
 
         return $q(function(resolve, reject){ 
-            if (mainFile.length === 0){
-                getMainFile().then(function success(response){
-                        resolve(filterListToArray(mainFile.articles, "debate", debateId));
-                    });            
-            } else {
-                resolve(filterListToArray(mainFile.articles, "debate", debateId));
-            }
+            resolve(filterListToArray(mainFile.articles, "debate", debateId));    
         });
     };
-    this.getArticlesOfAuthor = function _articlesOfAuthor(authorId) {
+   /* this.getArticlesOfAuthor = function _articlesOfAuthor(authorId) {
         console.log("tscApi.getArticles");
 
         return $q(function(resolve, reject){ 
@@ -130,8 +124,8 @@ function tscApi ($http, $q, $filter) {
             resolve(articles);
  
         });
-    };
-    this.getArticle = function _article(articleId) {
+    };*/
+    /*this.getArticle = function _article(articleId) {
         console.log("tscApi.getArticle for " + articleId);
 
         return $q(function(resolve, reject){ 
@@ -140,23 +134,8 @@ function tscApi ($http, $q, $filter) {
 
             resolve(article);
         });
-    };
+    };*/
 
-
-    this.getVotes = function _votes(){
-        console.log("tscApi.getVotes");
-
-        return $q(function(resolve, reject){ 
-
-            var votes = mainFile.votes;
-
-            for(var v in votes){
-
-            }
-
-            resolve(votes);
-        });
-    };
 
     this.getAuthors = function _authors(){
 
@@ -179,9 +158,14 @@ function tscApi ($http, $q, $filter) {
                                 authors[a].organisation = mainFile.organisations[authors[a].organisation].name;
                             }
 
-                            authors[a]["theses"] = filterListToArray(mainFile.theses, "author", a);
+                            authors[a]["theses"] = filterListToArray(mainFile.theses, "created_by", a);
                             authors[a]["articles"] = filterListToArray(mainFile.articles, "author", a);
                             authors[a]["votes"] = filterListToArray(mainFile.votes, "author", a);
+
+                            for (var i = 0; i < authors[a].votes.length; i++) {
+                                authors[a].votes[i]["thesis_text"] = mainFile.theses[authors[a].votes[i].thesis].text;   
+                            }
+
                         }
 
                         resolve(authors);
@@ -198,6 +182,14 @@ function tscApi ($http, $q, $filter) {
               resolve(response.authorId);
           });
         });
+    };
+
+    this.getAuthorsProVote = function _proVoteAuthors(thesisId){
+
+    };
+
+    this.getAuthorsConVote = function _conVoteAuthors(thesisId){
+
     };
 }
 
