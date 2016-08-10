@@ -24,8 +24,9 @@
     	<div ng-repeat="(key, value) in vm.debattes" >
 			
 			
-			<div class="matrix-row">
-				<i class="fa fa-comments" aria-hidden="true" ng-click=vm.showArticlesMatrix(key)> {{value.title}}</i>
+			<div class="matrix-row" ng-click=vm.showArticlesMatrix(key)>
+				<!--i class="fa fa-comments" aria-hidden="true" ng-click=vm.showArticlesMatrix(key)> {{value.title}}</i-->
+				{{value.title}}
 			</div>
     		<div class="matrix-columns">
     			<div ng-if="(vm.articles[0].debate == key)" ng-repeat="(keyA, valueA) in vm.articles">
@@ -36,11 +37,10 @@
 
 							<div ng-bind-html=valueA.headline class="dp-matrix-head"></div>
 							<div class="dp-matrix-text">
-								{{valueA.published.date}}
-								
+								<!--{{valueA.published.date}}
 								{{valueA.subheadline}}
 								{{valueA.teaser}}
-								{{valueA.text}}
+								{{valueA.text}}-->
 								<div ng-bind-html=valueA.text></div>
 							</div>
 						</div>
