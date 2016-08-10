@@ -14,23 +14,16 @@ var tscapp = angular
 tscAppCtrl.$inject = ['tscApi'];
 function tscAppCtrl(tscApi){
 
-
-
     var vm = this;
 
     vm.topics = [];
-    vm.article = {};
 
     vm.activate = function _activate(){
 
-        console.log('tscAppCtrl activate');
+        console.log('tscAppCtrl activate - the Main - should be always the first');
 
         tscApi.getTopics().then(function success(response){
             vm.topics = response;
-
-            tscApi.getRandomArticle().then(function success(response){
-                vm.article = response;
-            });
         });
 
     };
@@ -49,21 +42,29 @@ function route($routeProvider){
             templateUrl: 'features/debates.html',
             name: 'debate'
         })
+        .when('/articles',{
+            templateUrl: 'features/articles.html',
+            name: 'articles'
+        })
         .when('/articles/:id',{
             templateUrl: 'features/articles.html',
             name: 'articles'
         })
-        .when('/article/:id',{
+        /*.when('/article/:id',{
             templateUrl: 'features/article.html',
             name: 'article'
-        })
+        })*/
         .when('/authors',{
             templateUrl: 'features/authors.html',
             name: 'authors'
         })
+        .when('/matrix-view',{
+            templateUrl: 'features/matrix-view.html',
+            name: 'matrix-view'
+        })
         .otherwise({
-            redirectTo: 'features/debates.html',
-            name: 'debate'
+            //redirectTo: '/articles',
+            redirectTo: 'matrix-view'
         });
 }
 

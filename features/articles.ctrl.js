@@ -13,21 +13,48 @@ function tscArticlesCtrl($log, tscApi, $routeParams, $sce){
 
 	vm.activate = function _activate(){
 
-		$log.debug("tscArticlesCtrl.activate " + JSON.stringify($routeParams));
+		$log.debug("tscArticlesCtrl.activate - para:" + JSON.stringify($routeParams));
+
+		if (vm.debateId === undefined){
+
+			$log.debug("tscArticlesCtrl.activate - no para - getRandomArticle");
+
+            tscApi.getRandomArticle().then(function success(response){
+                
+                vm.articles.push(response);
+
+				$log.debug("tscArticlesCtrl.activate - random article: " + JSON.stringify(response));
+
+				/*
+				// debate info
+				tscApi.getDebate(response.debate).then(function success(response){
+					$log.debug("getDebate " + response);
+					vm.debate = response;
+				}, function fail(response){
+					$log.debug("tscArticlesCtrl.fail: " + response);	
+				});*/
+
+			});
 
 
-		tscApi.getDebate(vm.debateId).then(function success(response){
-			$log.debug("getDebate " + response);
-			vm.debate = response;
-		}, function fail(response){
-			$log.debug("tscArticlesCtrl.fail: " + response);	
-		});
+		} else {
 
-		tscApi.getArticlesOfDebatte(vm.debateId).then(function success(response){
-			$log.debug("tscArticlesCtrl " + response);
-			vm.articles = response;
-		}, function fail(response){
-			$log.debug("tscArticlesCtrl.fail: " + response);	
-		});
+			// debate info
+			tscApi.getDebate(vm.debateId).then(function success(response){
+				$log.debug("getDebate " + response);
+				vm.debate = response;
+			}, function fail(response){
+				$log.debug("tscArticlesCtrl.fail: " + response);	
+			});
+
+			// get articles
+			tscApi.getArticlesOfDebatte(vm.debateId).then(function success(response){
+				$log.debug("tscArticlesCtrl " + response);
+				vm.articles = response;
+			}, function fail(response){
+				$log.debug("tscArticlesCtrl.fail: " + response);	
+			});
+		}
+
 	};
 }

@@ -1,4 +1,4 @@
-<div ng-controller="tscDebatesCtrl as vm" ng-init="vm.activate()">
+<div ng-controller="tscMatrixViewCtrl as vm" ng-init="vm.activate()">
     
 	
 	<!--span class="badge" data-badge="{{vm.debattes.length}}">
@@ -12,25 +12,55 @@
 			
 		</li>
 	</ul-->
-	<section class="container grid-960">
+	<section class="container grid-960" id="content-meta">
 		<h3>
 			<i class="fa fa-comments" aria-hidden="true"></i>
-			Debatten in {{vm.debattes.topic_title}}:
+			Debatten :
 			<figure class="avatar avatar-lg" data-initial="{{vm.debattes.length}}" style="background-color: #5764c6;"></figure> 
 		</h3>
 	</section>
 
     <section class="container grid-960">
     
-    	<div class="columns" ng-repeat="(key, value) in vm.debattes">
-    		<div class="column col-12">
+    	<div ng-repeat="(key, value) in vm.debattes" >
+			
+			<div class="matrix-columns">
+    			<div class="matrix-debate">
+    				<i class="fa fa-comments" aria-hidden="true" ng-click=vm.showArticlesMatrix(key)> »{{value.title}}«</i>
+    			</div>
+    			<div ng-if="(vm.articles[0].debate == key)" ng-repeat="(keyA, valueA) in vm.articles">
+					<div ng-hide="vm.bShowDetails">
+						<div class="matrix-column" ng-click="vm.showArticle(keyA)">
+							
+							<div ng-bind-html=valueA.headline class="dp-matrix-head"></div>
+							<div class="dp-matrix-text">
+								{{valueA.published.date}}
+								
+								{{valueA.subheadline}}
+								{{valueA.teaser}}
+								{{valueA.text}}
+								<div ng-bind-html=valueA.text></div>
+							</div>
+						</div>
+					</div>
+
+					<div class="matrix-details" ng-show="vm.bShowDetails">
+    					buh!
+    				</div>
+    		</div>
+
+
+    	</div>
+
+
+    	<!--div>
+
+    		<div class="matrix-column">
 		        
 		        <div class="card">
 			        
 		        	<div class="card-header">
-		        		<a class="btn" ng-click="vm.flip()"> flip</a>
-
-		        		<!--h5 class="card-meta"><i class="fa fa-comments" aria-hidden="true"></i>Debatte</h5--> 
+		
 		        	    <h4 class="card-title">{{value.title}}</h4>
 		        		<h6 class="card-meta">{{value.published.date}}</h6>
 		        	</div>
@@ -50,7 +80,7 @@
 			    	
 				</div>
 			</div>
-		</div>
+		</div-->
 	</section>
 
 	<!--div class="row">

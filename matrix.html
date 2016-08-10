@@ -21,21 +21,19 @@
         <script type="text/javascript" src="tsc.api.js"></script>
         
         <!-- my controller scripts relate on services -->
-        <script type="text/javascript" src="features/articles.ctrl.js"></script>
-        <script type="text/javascript" src="features/article.ctrl.js"></script>
-        <script type="text/javascript" src="features/debates.ctrl.js"></script>
-        <script type="text/javascript" src="features/authors.ctrl.js"></script> 
+        <script type="text/javascript" src="features/matrix-view.js"></script> 
 
 
         <!-- d3  -->
-        <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
-        <script type="text/javascript" src="directives/d3bubbleMe.js"></script>
+        <!--script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+        <script type="text/javascript" src="directives/d3bubbleMe.js"></script-->
 
         <!-- styles -->
         <!--link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.css"-->
+        <link href='https://fonts.googleapis.com/css?family=Droid+Sans' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" type="text/css" href="bower_components/spectre.css/dist/spectre.min.css">
         <link rel="stylesheet" type="text/css" href="bower_components/font-awesome/css/font-awesome.min.css">
-        <link rel="stylesheet" type="text/css" href="tsc.css">
+        <link rel="stylesheet" type="text/css" href="tsc.matrix.css">
 
         <link rel="icon" href="resources/favicon.svg" type="image/png" sizes="16x16">
     </head>
@@ -44,7 +42,7 @@
         <img src="resources/favicon.svg" />
     </figure-->
 
-    <header class="navbar dp-header">
+    <!--header class="navbar dp-header">
         <section class="columns">
 
             <ul class="tab tab-block">
@@ -62,30 +60,14 @@
                 </li>
             </ul>
         </section>
-    </header>
+    </header-->
 
     <body>
-
-        <div class="dp-page-wrapper">
-
-            <div id="sitebarvotes">
-
-            <!--fa fa-adjust-->
-            <h4><i class="fa fa-bullhorn" aria-hidden="true"></i> Thesen</h4>
-
-                <!-- thesen im artikel, these in der Debatte - + karusell mit authoren -->
-
-                <ul>
-                    <li><a href="#L384">Section 1</a></li>
-                    <li><a href="#details">Section 2</a></li>
-                    <li><a href="#FAQ">Section 3</a></li>
-                </ul>
-            </div>
-
-            <div>
-                <div ng-view id="content"></div>
-            </div>
+        <div id="fade-left"></div>
+        <div>
+            <div ng-view></div>
         </div>
+        <div id="fade-right"></div>
 
     </body>
 

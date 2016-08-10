@@ -9,24 +9,28 @@ function tscApi ($http, $q, $filter) {
 
     console.log('tscApi instanciated.');
 
-    var mainFile = [];
+    var mainFile = {};
     var imgurl = 'https://causa.tagesspiegel.de';
+    var jsonFile = 'data/all_debates.json';
 
+    // load the data
+    getMainFile();
 
     function getMainFile(){
-        console.log("tscApi.getMainFile");
+        console.log("getMainFile called");
 
         return $q(function(resolve, reject){
 
-            $http.get('data/all_debates.json')
+            $http.get(jsonFile)
                 .then(function success(response){
                     
-                   // console.log('mainfile ' + JSON.stringify(mainFile));
+                    console.log('mainFile read ' + jsonFile + ' done'); 
 
-                    mainFile =  response.data;
+                    mainFile = response.data;
                     resolve(mainFile);
 
             }, function fail(response){
+                console.log('mainFile error ' + JSON.stringify(response)); 
                 reject(response);
             });
         });
@@ -53,18 +57,20 @@ function tscApi ($http, $q, $filter) {
     this.getRandomArticle = function _randomArticle(){
         return $q(function(resolve, reject){
 
+            console.log("getRandomArticle");
 
-            if (mainFile.length === 0){
-                getMainFile().then(function success(response){
-                        resolve(mainFile.articles[Math.floor(Math.random() * Object.keys(mainFile.articles).length)]);
-                    });            
-            } else {
-                resolve(mainFile.articles[Math.floor(Math.random() * Object.keys(mainFile.articles).length)]);
-            }
+            do {
 
-            //var random = jsonContent.featured[Math.floor(Math.random() * jsonContent.featured.length)];
-            //console.log(random)
-            //resolve(random);
+                setTimeout(function(){
+
+                    var randomId = Object.keys(mainFile.articles)[Math.floor(Math.random() * Object.keys(mainFile.articles).length)];
+                    console.log("articles length " + Object.keys(mainFile.articles).length + " > random id " + randomId );
+                    resolve(mainFile.articles[randomId]);            
+
+                }, 1000);
+
+            } while ( Object.keys(mainFile).lenght === 0 );
+
         });
     };
 
@@ -75,25 +81,33 @@ function tscApi ($http, $q, $filter) {
         
         return $q(function(resolve, reject){
 
-            if (mainFile.length === 0){
-                getMainFile().then(function success(response){
-                    resolve(mainFile.topics);    
-                });            
-            } else {
-                resolve(mainFile.topics);
-            }
+            do {
+
+                setTimeout(function(){
+                    resolve(mainFile.topics);
+                }, 1000);
+
+            } while ( Object.keys(mainFile).lenght === 0 );
         });
     };
-
 
     this.getDebates = function _debates(topicId) {
         console.log("tscApi.getDebattes for " + topicId);
 
         return $q(function(resolve, reject){
+            do {
+                setTimeout(function(){
+                    if (topicId === undefined){
+                        resolve(mainFile.debates);
+                    } else {
 
-            var debates = filterListToArray(mainFile.debates, "topic", topicId);
-            debates["topic_title"] = mainFile.topics[topicId].title;
-            resolve(debates);
+                        var debates = filterListToArray(mainFile.debates, "topic", topicId);
+                        debates["topic_title"] = mainFile.topics[topicId].title;
+                        resolve(debates);
+                    }
+                }, 1000);
+
+            } while ( Object.keys(mainFile).lenght === 0 );
         });
     };
     this.getDebate = function _debate(debateId) {
