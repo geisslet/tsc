@@ -13,7 +13,7 @@
 			<figure class="avatar avatar-lg">
         		<img src="resources/favicon.svg" /> 
    			</figure>
-   			{{vm.debattes.length}} Debatten
+   			{{Object.keys(vm.debates).length}} Debatten
 			
 			<!--figure class="avatar avatar-lg" data-initial="{{vm.debattes.length}}" style="background-color: #5764c6;"></figure   »« --> 
 		</h3>
@@ -21,45 +21,68 @@
 
     <section id="content">
     
-    	<div ng-repeat="(key, value) in vm.debattes" >
-			
-			
-			<div class="matrix-row" ng-click=vm.showArticlesMatrix(key)>
-				<!--i class="fa fa-comments" aria-hidden="true" ng-click=vm.showArticlesMatrix(key)> {{value.title}}</i-->
-				{{value.title}}
+    	<div>
+	    	<div ng-repeat="(key, value) in vm.debates" ng-hide="vm.bDebateSelected">
+				<div id="anchor{{index}}" class="matrix-row" ng-click=vm.showArticlesMatrix(key)>
+					<!--i class="fa fa-comments" aria-hidden="true" ng-click=vm.showArticlesMatrix(key)> {{value.title}}</i-->
+					{{value.title}}
+				</div>
 			</div>
-    		<div class="matrix-columns">
-    			<div ng-if="(vm.articles[0].debate == key)" ng-repeat="(keyA, valueA) in vm.articles">
-					<div ng-hide="vm.bShowDetails">
-						<div class="matrix-column" ng-click="vm.showArticle(keyA)" ng-hide="bDetailVisible = !bDetailVisible">
-							
-							<figure class="avatar avatar-sm" ng-mouseover="vm.showAuthor()"></figure>
 
-							<div ng-bind-html=valueA.headline class="dp-matrix-head"></div>
-							<div class="dp-matrix-text">
-								<!--{{valueA.published.date}}
-								{{valueA.subheadline}}
-								{{valueA.teaser}}
-								{{valueA.text}}-->
-								<div ng-bind-html=valueA.text></div>
-							</div>
+			<div class="matrix-row" ng-show="vm.bDebateSelected" ng-click="vm.bDebateSelected = !vm.bDebateSelected">
+				{{vm.selectedDebate.title}}
+			</div>
+		</div>
+		
+		<div ng-show="vm.bDebateSelected">
+        	<div id="fade-left"></div>
+
+        	<div> <!-- articles -->
+	    		<div class="matrix-columns">
+	    			<div ng-repeat="(keyA, valueA) in vm.articles">
+						
+							<div class="matrix-column" ng-click="vm.showArticle(keyA)" ng-show="vm.bShowArticleMatrix">
+								
+								<figure class="avatar avatar-sm" ng-mouseover="vm.showAuthor()"></figure>
+
+								<div ng-bind-html=valueA.headline class="dp-matrix-head"></div>
+								<div class="dp-matrix-text">
+									<!--{{valueA.published.date}}
+									{{valueA.subheadline}}
+									{{valueA.teaser}}
+									{{valueA.text}}-->
+									<div ng-bind-html=valueA.text></div>
+								</div>
+						
 						</div>
-					</div>
 
-					<div class="matrix-details" ng-show="vm.bShowDetails">
-    					buh!
-    				</div>
+						
+	    			</div>
+	    		</div>
+	    	</div>
 
-    				<!--div>
-    					{{valueA.author}}
-    				</div>
-
-    				<div>
-    					{{valueA.author}}
-    				</div-->
-    		</div>
+			<div> <!-- article full -->
+		    	<div class="matrix-details" ng-show="vm.bShowArticle">
+		    			buh!
+		    	</div>
+		    </div>
 
 
+			<div> <!-- author -->
+		    	<div class="matrix-details" ng-show="vm.bShowAuthor">
+		    		{{vm.article.author}}
+		    	</div>
+		    </div>
+
+
+ 			<div id="fade-right"></div>
+
+ 			<div id="indicator">
+ 				<div id="indicator-line"></div>
+ 				<div id="indicator-thickline"></div>
+ 				<div id="indicator-text">bla</div>
+ 				<d3bubble-me id="indicator-chart" chart-data="vm.bubbleData"></d3bubble-me>
+ 			</div>
     	</div>
 
 

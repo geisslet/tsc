@@ -25,14 +25,16 @@
 
 
         <!-- d3  -->
-        <!--script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
-        <script type="text/javascript" src="directives/d3bubbleMe.js"></script-->
+        <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+        <script src="directives/d3-tip.js"></script>
+        <script type="text/javascript" src="directives/d3bubbleMe.js"></script>
 
         <!-- styles -->
         <!--link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.css"-->
         <link href='https://fonts.googleapis.com/css?family=Droid+Sans' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" type="text/css" href="bower_components/spectre.css/dist/spectre.min.css">
         <link rel="stylesheet" type="text/css" href="bower_components/font-awesome/css/font-awesome.min.css">
+        <link rel="stylesheet" href="directives/style.css">
         <link rel="stylesheet" type="text/css" href="tsc.matrix.css">
 
         <link rel="icon" href="resources/favicon.svg" type="image/png" sizes="16x16">
@@ -63,12 +65,7 @@
     </header-->
 
     <body>
-        <div id="fade-left"></div>
-        <div>
-            <div ng-view></div>
-        </div>
-        <div id="fade-right"></div>
-
+        <div ng-view></div>
     </body>
 
 </html>

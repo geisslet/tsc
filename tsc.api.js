@@ -53,7 +53,13 @@ function tscApi ($http, $q, $filter) {
         }
         return array;
     }
+    function modifyArticleText(text){
 
+       // remove _____
+       //FIXME die anker einfügen
+
+        return text;
+    }
     this.getRandomArticle = function _randomArticle(){
         return $q(function(resolve, reject){
 
@@ -92,12 +98,13 @@ function tscApi ($http, $q, $filter) {
     };
 
     this.getDebates = function _debates(topicId) {
-        console.log("tscApi.getDebattes for " + topicId);
+        console.log("tscApi.getDebates for " + topicId);
 
         return $q(function(resolve, reject){
             do {
                 setTimeout(function(){
                     if (topicId === undefined){
+                        console.log("tscApi.getDebates all, bcz. topic was undefined");
                         resolve(mainFile.debates);
                     } else {
 
@@ -121,13 +128,51 @@ function tscApi ($http, $q, $filter) {
         });
     };
 
-    this.getArticlesOfDebatte = function _articlesOfDebatte(debateId) {
-        console.log("tscApi.getArticles");
+    this.getArticlesOfDebate = function _articlesOfDebate(debateId) {
+        console.log("tscApi.getArticlesOfDebate");
 
         return $q(function(resolve, reject){ 
             resolve(filterListToArray(mainFile.articles, "debate", debateId));    
         });
     };
+
+    this.getVotesDataOfDebate = function _voteDataOfDebate(debateId){
+        console.log("tscApi.getVotesDataOfDebate");
+
+        return $q(function(resolve, reject){ 
+
+            var data = [];
+
+            var votesOfDebate = filterListToArray(mainFile.votes, "debate", debateId);
+
+            // get list of all thesis
+            var listOfTheses = [];
+            for(var thesis in votesOfDebate) {
+                
+                if (listOfTheses.indexOf(votesOfDebate[thesis]["thesis"])<0){
+                    console.log("tscApi.getVotesDataOfDebate.listOfTheses new " + votesOfDebate[thesis]["thesis"]);
+                    listOfTheses.push(votesOfDebate[thesis]["thesis"]);
+                }
+
+            }
+
+            // build the array
+            for(var t in listOfTheses){
+                var v = filterListToArray(votesOfDebate, "thesis", listOfTheses[t]);
+                var sum = 0;
+
+                for(var v2 in v){
+                   sum = sum+ parseInt(v[v2]["vote"]);
+                }
+
+                data.push([v.length, sum]);
+            }
+            
+
+            resolve(data);    
+        });
+    };
+
    /* this.getArticlesOfAuthor = function _articlesOfAuthor(authorId) {
         console.log("tscApi.getArticles");
 

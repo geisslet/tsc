@@ -105,6 +105,38 @@ body{
     background: linear-gradient(to right, rgba(255,255,255,0), rgba(255,255,255,1)); /*Standard*/
 }
 
+#indicator{
+    width: 100%
+    display: block; 
+    position: absolute;
+    top:300px;
+}
+
+#indicator-line{
+    height: 1px;
+    position: relative;
+    left:10em;
+    width: 100%;
+    /*z-index:100;*/
+    background-color: red;
+}
+#indicator-thickline{
+    width: 10em;
+    height: 7px;
+    position: relative;;
+    background-color: red;
+}
+#indicator-text{
+    float: left;
+    position: relative;
+    margin-top: 7px;
+    font-size: 17px;
+    color: black;
+}
+#indicator-chart{
+    
+}
+
 .matrix-columns{
     display: flex;
     display: -ms-flexbox;
@@ -127,6 +159,7 @@ body{
 }
 .matrix-row{
     display: block;
+    position: fix;
     font-size: 18pt;
     padding-left: 40px;
     font-weight: bold;
@@ -134,9 +167,9 @@ body{
     line-height: 2;
 }
 .matrix-row:hover{
-    /*color: yellow;
-    font-size: 20pt;*/
-    text-decoration: underline;
+    color: black;
+    /*font-size: 20pt;*/
+    /*text-decoration: underline;*/
 
 }
 .dp-thesis{
@@ -153,6 +186,13 @@ body{
     color: lightgrey;
     font-size: 5pt;
     line-height: 1.5em;
+}
+.matrix-column.p{
+    margin: 0px;
+}
+.matrix-column.a{
+    text-decoration: none;
+    color: inherit;
 }
 .dp-matrix-head{
     color: black;

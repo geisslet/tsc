@@ -48,7 +48,7 @@ function tscArticlesCtrl($log, tscApi, $routeParams, $sce){
 			});
 
 			// get articles
-			tscApi.getArticlesOfDebatte(vm.debateId).then(function success(response){
+			tscApi.getArticlesOfDebate(vm.debateId).then(function success(response){
 				$log.debug("tscArticlesCtrl " + response);
 				vm.articles = response;
 			}, function fail(response){

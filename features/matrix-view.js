@@ -5,11 +5,16 @@ tscMatrixViewCtrl.$inject = ['$log', 'tscApi', '$routeParams','$sce'];
 function tscMatrixViewCtrl($log, tscApi, $routeParams,$sce){
 	var vm = this;
 
-	vm.debattes = {};
+	vm.debates = {};
 	vm.articles = {};
 	vm.article = {};
 	vm.topicId = $routeParams.id;
-	vm.bShowDetails=false;
+	vm.bDebateSelected=false;
+	vm.bShowArticleMatrix=true;
+	vm.bShowArticle=false;
+	vm.bShowAuthor=false;
+	vm.selectedDebate={};
+	vm.bubbleData = [];//[[10, 10], [20, 20], [16, 0], [30, 12], [38, -30]];
 
 
 	vm.activate = function _activate(){
@@ -18,28 +23,33 @@ function tscMatrixViewCtrl($log, tscApi, $routeParams,$sce){
 
 		tscApi.getDebates().then(function success(response){
 			$log.debug("tscMatrixViewCtrl " + response);
-			vm.debattes = response;
+			vm.debates = response;
 
 		}, function fail(response){
 			$log.debug("tscMatrixViewCtrl.fail: " + response);	
 		});
 	};
-
+	
+	vm.setDebateSelected = function _setDebateSelected(){
+			vm.bDebateSelected=true;
+	};
 
 	vm.showArticlesMatrix = function _articleMatrix(debateId){
-		$log.debug("tscMatrixViewCtrl.articlesMatrix");
+		$log.debug("tscMatrixViewCtrl.showArticlesMatrix");
 
-		tscApi.getArticlesOfDebatte(debateId).then(function success(response){
-			$log.debug("tscMatrixViewCtrl.articlesMatrix " + response);
+		vm.bDebateSelected=true;
+		vm.selectedDebate = vm.debates[debateId];
+
+		tscApi.getArticlesOfDebate(debateId).then(function success(response){
+			$log.debug("tscMatrixViewCtrl.showArticlesMatrix.getArticlesOfDebate " + response);
 			vm.articles = response;
-
-			vm.bShowDetails=false;
+		});
+		tscApi.getVotesDataOfDebate(debateId).then(function success(response){
+			$log.debug("tscMatrixViewCtrl.showArticlesMatrix.getVotesDataOfDebate " + JSON.stringify(response));
+			vm.bubbleData = response;
 		});
 	};
 
-	vm.showArticle = function _showArticle(){
-			vm.bShowDetails=true;
-	};
 
 	vm.gotoAnchor = function(x) {
       var newHash = 'anchor' + x;
