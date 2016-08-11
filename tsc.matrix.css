@@ -134,7 +134,7 @@ body{
     color: black;
 }
 #indicator-chart{
-    
+
 }
 
 .matrix-columns{
@@ -173,7 +173,7 @@ body{
 
 }
 .dp-thesis{
-    color: orange;
+    color: black;
     font-size: 5pt;
     line-height: 1.5em;
     margin: 0px;
@@ -190,7 +190,7 @@ body{
 .matrix-column.p{
     margin: 0px;
 }
-.matrix-column.a{
+.matrix-column.p.a{
     text-decoration: none;
     color: inherit;
 }

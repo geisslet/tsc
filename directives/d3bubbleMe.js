@@ -15,7 +15,7 @@ function d3bubbleMe($parse){
          //this is important,
          //we don't want to overwrite our directive declaration
          //in the HTML mark-up
-         replace: false,
+         replace: true,
          scope: {data: '=chartData'},
          link: function (scope, element, attrs) {
            
