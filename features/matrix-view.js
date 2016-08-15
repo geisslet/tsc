@@ -15,7 +15,11 @@ function tscMatrixViewCtrl($log, tscApi, $routeParams,$sce){
 	vm.bShowAuthor=false;
 	vm.selectedDebate={};
 	vm.bubbleData = [];//[[10, 10], [20, 20], [16, 0], [30, 12], [38, -30]];
+	vm.indicatorStyle={top: -1+'px'};
+	vm.indicatorStyleHighlight={};
 
+	vm.articleIndicatorStyle={top: -1+'px'};
+	vm.articleIndicatorStyleHighlight={};
 
 	vm.activate = function _activate(){
 
@@ -40,16 +44,59 @@ function tscMatrixViewCtrl($log, tscApi, $routeParams,$sce){
 		vm.bDebateSelected=true;
 		vm.selectedDebate = vm.debates[debateId];
 
+		// get the article
 		tscApi.getArticlesOfDebate(debateId).then(function success(response){
 			$log.debug("tscMatrixViewCtrl.showArticlesMatrix.getArticlesOfDebate " + response);
 			vm.articles = response;
 		});
+
+		// get data for the bubble chart
 		tscApi.getVotesDataOfDebate(debateId).then(function success(response){
 			$log.debug("tscMatrixViewCtrl.showArticlesMatrix.getVotesDataOfDebate " + JSON.stringify(response));
 			vm.bubbleData = response;
 		});
 	};
 
+	vm.ShowArticle = function _articeDetail(keyA, $event){
+		$log.debug("ShowArticle: " + keyA + " / " + JSON.stringify($event));
+	};
+
+
+	vm.paintIndicator = function _paintIndicator($event){
+		/*$log.debug("offsetTop: "+angular.element($event.target).prop('offsetTop'));
+		$log.debug("offsetWidth: "+angular.element($event.target).prop('offsetWidth'));
+		$log.debug("offsetHeight: "+angular.element($event.target).prop('offsetHeight'));
+		$log.debug("length: "+angular.element($event.target).prop('length'));
+		$log.debug("event.offsetX: "+angular.element($event.target).prop('event.offsetX'));
+		$log.debug("event.offsetY: "+angular.element($event.target).prop('event.offsetY'));
+		$log.debug("event.target: "+angular.element($event.target));*/
+		var dist = angular.element($event.target).prop('offsetTop') + angular.element($event.target).prop('offsetHeight');
+		vm.indicatorStyle = { top: dist +'px'};//'{"background-color":"yellow"}';
+		$log.debug("vm.indicatorStyle: " + vm.indicatorStyle);
+		vm.indicatorStyleHighlight = {width: angular.element($event.target).prop('offsetWidth') + 'px'};
+		$log.debug("vm.indicatorStyleHighlight: " + vm.indicatorStyleHighlight);
+		//angular.element( document.querySelector('#indicator-debates').attr("left",offsetTop);
+	};
+	vm.paintArticleIndicator = function _paintArticleIndicator($event){
+		$log.debug("offsetTop: "+angular.element($event.target).prop('offsetTop'));
+		$log.debug("offsetWidth: "+angular.element($event.target).prop('offsetWidth'));
+		$log.debug("offsetHeight: "+angular.element($event.target).prop('offsetHeight'));
+		$log.debug("length: "+angular.element($event.target).prop('length'));
+		$log.debug("event.offsetX: "+angular.element($event.target).prop('event.offsetX'));
+		$log.debug("event.offsetY: "+angular.element($event.target).prop('event.offsetY'));
+		$log.debug("event.target: "+angular.element($event.target));
+		var dist = angular.element($event.target).prop('offsetTop') + angular.element($event.target).prop('offsetHeight');
+		vm.articleIndicatorStyle = { top: dist +'px'};//'{"background-color":"yellow"}';
+		$log.debug("vm.articleIndicatorStyle: " + vm.articleIndicatorStyle);
+		vm.articleIndicatorStyleHighlight = {width: angular.element($event.target).prop('offsetWidth') + 'px'};
+		$log.debug("vm.articleIndicatorStyleHighlight: " + vm.articleIndicatorStyleHighlight);
+	
+	};
+
+	vm.showAlert = function _alertTest(){
+		$log.debug("alert");
+		alert("alert");
+	};
 
 	vm.gotoAnchor = function(x) {
       var newHash = 'anchor' + x;

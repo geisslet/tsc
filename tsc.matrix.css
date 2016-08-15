@@ -1,5 +1,5 @@
 html {
-    font-family: 'Droid Sans';
+    font-family: 'Droid Sans', sans-serif;
     -webkit-text-size-adjust: 100%;
     vertical-align: baseline;
     box-sizing: border-box;
@@ -80,7 +80,7 @@ body{
 }
 
 #content{
-    margin-top: 6em;
+    margin-top: 1em;
     width: 100%;
     height: 100%;
 }
@@ -99,44 +99,63 @@ body{
     height: 100%;
     position: fixed;
     right: 0px;
+    z-index: 100;
     background: white; /* For browsers that do not support gradients */
     background: -webkit-linear-gradient(left,rgba(255,255,255,0),rgba(255,255,255,1)); /*Safari 5.1-6*/
     background: -moz-linear-gradient(right,rgba(255,255,255,0),rgba(255,255,255,1)); /*Fx 3.6-15*/
     background: linear-gradient(to right, rgba(255,255,255,0), rgba(255,255,255,1)); /*Standard*/
 }
 
-#indicator{
-    width: 100%
+.indicator{
+    width: 100%;
     display: block; 
     position: absolute;
-    top:300px;
+    transition: all linear 0.2s;
 }
-
-#indicator-line{
+.indicator-line{
     height: 1px;
-    position: relative;
-    left:10em;
     width: 100%;
-    /*z-index:100;*/
-    background-color: red;
+    position: relative;
+    left:40px;
 }
-#indicator-thickline{
-    width: 10em;
+.indicator-highlight{
     height: 7px;
+    width: 10em;
     position: relative;;
+    left: 40px;
+}
+.indicator-topic{
+    position: absolute;;
+    right: 10px;
+    font-size: 12px;
+    font-weight: normal;
+    padding-top: 25px;
+}
+.indicator-red{
     background-color: red;
 }
-#indicator-text{
+.indicator-black{
+    background-color: black;
+}
+.indicator-text{
     float: left;
     position: relative;
     margin-top: 7px;
     font-size: 17px;
     color: black;
 }
-#indicator-chart{
+.indicator-chart{
+
 
 }
+#disclaimer{
+    display: block;
+    right: 5px;
+    bottom: 5px;
+}
 
+
+/* >>>>> matrix layout ------------------- */
 .matrix-columns{
     display: flex;
     display: -ms-flexbox;
@@ -146,25 +165,27 @@ body{
     scroll-snap-type: mandatory;
 }
 .matrix-column{
-    width: 10em;
+    width: 12em;
     background: #fff;
     /*border: .1rem solid #efefef;
     border-radius: .3rem;*/
     margin: 10px;
+    padding: 3px;
     /*padding: 2px;*/
     scroll-snap-align: center none;
 }
 .matrix-column:hover{
-    background-color: yellow;
+    background-color: rgb(205,231,231);
 }
 .matrix-row{
     display: block;
     position: fix;
-    font-size: 18pt;
+    font-size: 24pt;
     padding-left: 40px;
     font-weight: bold;
-    color: rbg(5,5,5);
+    color: black;
     line-height: 2;
+    transition: all linear 0.3s;
 }
 .matrix-row:hover{
     color: black;
@@ -174,17 +195,17 @@ body{
 }
 .dp-thesis{
     color: black;
-    font-size: 5pt;
+    font-size: 6pt;
     line-height: 1.5em;
     margin: 0px;
 }
-.dp-thesis:hover{
+/*.dp-thesis:hover{
     background-color: red;
     font-size: 14px;
-}
+}*/
 .dp-matrix-text{
     color: lightgrey;
-    font-size: 5pt;
+    font-size: 6pt;
     line-height: 1.5em;
 }
 .matrix-column.p{
@@ -196,17 +217,19 @@ body{
 }
 .dp-matrix-head{
     color: black;
-    font-size: 14pt;
+    font-size: 16pt;
     line-height: 1.5em;
+    margin-bottom: 5px; 
 }
 .matrix-details{
     color: lightgrey;
 }
 
 a, a:focus, a:hover {
-   /* color: inherit;*/
+    color: inherit;
     text-decoration: none;
 }
+
 .dp-debate-statistics .dp-badge {
     width: 48px;
     height: 48px;
@@ -218,4 +241,23 @@ a, a:focus, a:hover {
     padding: 0 20px;
 }
 
+.dots-pro {
+        line-height: 1;
+        font-weight: bold;
+        padding: 12px;
+        background: rgba(204, 204, 204, 0.8);
+        color: darkgreen;
+        border-radius: 12px;
+      }
+
+.dots-con {
+        line-height: 1;
+        font-weight: bold;
+        padding: 12px;
+        background: rgba(204, 204, 204, 0.8);
+        color: darkred;
+        border-radius: 12px;
+
+
+      }
 

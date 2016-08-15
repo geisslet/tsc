@@ -6,10 +6,31 @@
 */ 
 
 var tscapp = angular 
-    .module('tsc', ['ngSanitize','ngRoute'])
+    .module('tsc', ['ngAnimate','ngSanitize','ngRoute'])
     //.module('tsc', ['ngRoute'])
     .controller('tscAppCtrl', tscAppCtrl)
-    .config(route);
+    .config(route)
+    .directive('compile', ['$compile', function ($compile) {
+    return function(scope, element, attrs) {
+        scope.$watch(
+            function(scope) {
+                // watch the 'compile' expression for changes
+                return scope.$eval(attrs.compile);
+            },
+            function(value) {
+                // when the 'compile' expression changes
+                // assign it into the current DOM
+                element.html(value);
+
+                // compile the new DOM and link it to the current
+                // scope.
+                // NOTE: we only compile .childNodes so that
+                // we don't get into infinite loop compiling ourselves
+                $compile(element.contents())(scope);
+            }
+        );
+    };
+}]);
 
 tscAppCtrl.$inject = ['tscApi'];
 function tscAppCtrl(tscApi){

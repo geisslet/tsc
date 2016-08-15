@@ -1,6 +1,6 @@
 body { font: 12px Arial;}
 path {
-stroke: steelblue; stroke-width: 2; fill: none;
+  stroke: steelblue; stroke-width: 2; fill: none;
 }
 .axis path,
 .axis line {
@@ -24,9 +24,6 @@ stroke: steelblue; stroke-width: 2; fill: none;
   fill: red ;
   opacity: 1;
 }
-
-
-
 
 .d3-tip {
   line-height: 1;

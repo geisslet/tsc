@@ -10,6 +10,7 @@
         <script type="text/javascript" src="bower_components/angular/angular.min.js"></script>
         <script type="text/javascript" src="bower_components/angular/angular-sanitize.min.js"></script>
         <script type="text/javascript" src="bower_components/angular-route/angular-route.min.js"></script>
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-animate.js"></script>
 
         <!--script type="text/javascript" src="bower_components/linqjs/dist/linq.min.js"></script-->
         <!--script type="text/javascript" src=".bower_components/elasticsearch/elasticsearch.angular.js"></script-->
@@ -31,7 +32,7 @@
 
         <!-- styles -->
         <!--link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.css"-->
-        <link href='https://fonts.googleapis.com/css?family=Droid+Sans' rel='stylesheet' type='text/css'>
+        <link href='https://fonts.googleapis.com/css?family=Droid+Sans:700,400' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" type="text/css" href="bower_components/spectre.css/dist/spectre.min.css">
         <link rel="stylesheet" type="text/css" href="bower_components/font-awesome/css/font-awesome.min.css">
         <link rel="stylesheet" href="directives/style.css">
@@ -40,9 +41,8 @@
         <link rel="icon" href="resources/favicon.svg" type="image/png" sizes="16x16">
     </head>
     
-    <!--figure class="avatar avatar-xl">
-        <img src="resources/favicon.svg" />
-    </figure-->
+
+
 
     <!--header class="navbar dp-header">
         <section class="columns">
@@ -66,6 +66,15 @@
 
     <body>
         <div ng-view></div>
+
     </body>
+    <footer>
+        <section id="disclaimer">
+            <figure class="avatar avatar-sm">
+                <img src="resources/favicon.svg" />
+            </figure>
+            Disclaimer: content belongs to <a>https://causa.tagesspiegel.de</a> - this is just a POC
+        </section> 
+    </footer>
 
 </html>

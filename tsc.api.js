@@ -53,13 +53,6 @@ function tscApi ($http, $q, $filter) {
         }
         return array;
     }
-    function modifyArticleText(text){
-
-       // remove _____
-       //FIXME die anker einfügen
-
-        return text;
-    }
     this.getRandomArticle = function _randomArticle(){
         return $q(function(resolve, reject){
 
@@ -103,36 +96,54 @@ function tscApi ($http, $q, $filter) {
         return $q(function(resolve, reject){
             do {
                 setTimeout(function(){
-                    if (topicId === undefined){
-                        console.log("tscApi.getDebates all, bcz. topic was undefined");
-                        resolve(mainFile.debates);
-                    } else {
 
-                        var debates = filterListToArray(mainFile.debates, "topic", topicId);
-                        debates["topic_title"] = mainFile.topics[topicId].title;
-                        resolve(debates);
+                    var da = mainFile.debates;
+                    for (var d in da){
+                        da[d]["topic_title"] = mainFile.topics[da[d].topic]["title"];
+                        //console.log(JSON.stringify(da[d]));
+                    }
+
+                    if (topicId === undefined){
+                        console.log("tscApi.getDebates all");
+                        resolve(da);
+                    } else {
+                        console.log("tscApi.getDebates for topic: " + topicId);
+                        resolve(filterListToArray(da, "topic", topicId));
                     }
                 }, 1000);
 
             } while ( Object.keys(mainFile).lenght === 0 );
         });
     };
+    /* not used - was useful previously
     this.getDebate = function _debate(debateId) {
         console.log("tscApi.getDebate for " + debateId);
 
-        return $q(function(resolve, reject){
- 
-                var debate = mainFile.debates[debateId];
-                debate["topic_title"] = mainFile.topics[debate.topic];
-                resolve(debate);
+        return $q(function(resolve, reject){                
+                resolve(this.getDebates()[debateId]);
         });
-    };
+    };*/
 
     this.getArticlesOfDebate = function _articlesOfDebate(debateId) {
         console.log("tscApi.getArticlesOfDebate");
 
-        return $q(function(resolve, reject){ 
-            resolve(filterListToArray(mainFile.articles, "debate", debateId));    
+        return $q(function(resolve, reject){
+
+            var vA = filterListToArray(mainFile.articles, "debate", debateId);
+
+            /* replace data-id by id for anchor scrolling and add mouse over 
+               - be aware that a modified ngSanitize is used, bcz not all attributes are allowed and filtered by default 
+               - id and ng.mouseenter was manually added to angular-sanitize.min.js
+               there should be a better way by avoiding embedded html
+            */
+            for(var k in vA){
+                vA[k].text = vA[k].text.replace(/data-id/gi, "id");
+                vA[k].text = vA[k].text.replace(/class=/gi, "ng-click=vm.showAlert() ng-mouseenter=vm.paintArticleIndicator($event) class=");
+                vA[k].text = $sce.trustAsHtml(vA[k].text);
+                vA[k]["theses"] = filterListToArray(mainFile.articles_theses, "article", k); 
+            }
+
+            resolve(vA);   
         });
     };
 
@@ -150,7 +161,7 @@ function tscApi ($http, $q, $filter) {
             for(var thesis in votesOfDebate) {
                 
                 if (listOfTheses.indexOf(votesOfDebate[thesis]["thesis"])<0){
-                    console.log("tscApi.getVotesDataOfDebate.listOfTheses new " + votesOfDebate[thesis]["thesis"]);
+                    //console.log("tscApi.getVotesDataOfDebate.listOfTheses new " + votesOfDebate[thesis]["thesis"]);
                     listOfTheses.push(votesOfDebate[thesis]["thesis"]);
                 }
 

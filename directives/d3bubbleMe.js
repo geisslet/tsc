@@ -15,7 +15,7 @@ function d3bubbleMe($parse){
          //this is important,
          //we don't want to overwrite our directive declaration
          //in the HTML mark-up
-         replace: true,
+         replace: false,
          scope: {data: '=chartData'},
          link: function (scope, element, attrs) {
            
@@ -34,7 +34,7 @@ function d3bubbleMe($parse){
                 .attr("width", width + margin.left + margin.right)
                 .attr("height", height + margin.top + margin.bottom)
                 .append("g")
-                    .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+                    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
                     // .call(xAxis);
 
             // With this convention, all subsequent code can ignore margins
@@ -77,18 +77,18 @@ function d3bubbleMe($parse){
                 .attr("stroke-width", 2)
                 .attr("stroke", "darkcyan")
                 .style("stroke-dasharray", ("2, 2"))
-                .style("opacity", .2); 
+                .style("opacity", 0.2); 
 
 
-            canvas.call(tip)
+            canvas.call(tip);
 
             var circles = canvas.selectAll(".circle")
                 .data(dataset)
                 .enter().append("circle")
                     // .style("fill", "darkcyan")
                 .attr("class", "circle")
-                    .attr("cx", function (a,i) {return i * 60 + 10})
-                    .attr("cy", function(a) {return height/2})
+                    .attr("cx", function (a,i) {return i * 60 + 10;})
+                    .attr("cy", function(a) {return height/2;})
                     .attr("r", 5)
                 
                 
@@ -124,16 +124,16 @@ function d3bubbleMe($parse){
                 .on("mouseout", tip.hide)
 
                 .transition()
-                .delay(function(d, i) { return i * 1000 })
+                .delay(function(d, i) { return i * 1000;})
                 .duration(1000)
 
               // calculate the new radius on the data (circle area as measure)
 
-                    .attr("r", function(a) { return Math.sqrt(a[0]*10/Math.PI)})
+                    .attr("r", function(a) { return Math.sqrt(a[0]*10/Math.PI);})
 
               // change position, depending on +/-VOTES -- Scale!!  
                     
-                .attr("cy", function(a) {return height/2 - 3*a[1]})
+                .attr("cy", function(a) {return height/2 - 3*a[1];})
                     
                 // .style("opacity", .2)
                     // .style("fill", "darkcyan")

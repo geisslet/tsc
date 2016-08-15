@@ -7,28 +7,39 @@
 			
 		</li>
 	</ul-->
-	<section id="content-meta">
+	<!--section id="content-meta">
 		<h3>
-			<!--i class="fa fa-comments" aria-hidden="true"></i-->
+			<!-i class="fa fa-comments" aria-hidden="true"></i->
 			<figure class="avatar avatar-lg">
         		<img src="resources/favicon.svg" /> 
    			</figure>
    			{{Object.keys(vm.debates).length}} Debatten
 			
-			<!--figure class="avatar avatar-lg" data-initial="{{vm.debattes.length}}" style="background-color: #5764c6;"></figure   »« --> 
+			<!-figure class="avatar avatar-lg" data-initial="{{vm.debattes.length}}" style="background-color: #5764c6;"></figure   »« -> 
 		</h3>
-	</section>
+	</section-->
+
 
     <section id="content">
     
     	<div>
+
+    		<!-- the moving indicator -->
+    		<div id="indicator-debates" class="indicator" ng-style=vm.indicatorStyle ng-hide="vm.bDebateSelected">
+				<div class="indicator-line indicator-black"></div>
+				<div class="indicator-highlight indicator-black" ng-style=vm.indicatorStyleHighlight></div>
+			</div>
+
+			<!-- debates overview - should be a own angular view for better 'back' button navigation in mobil -->
 	    	<div ng-repeat="(key, value) in vm.debates" ng-hide="vm.bDebateSelected">
-				<div id="anchor{{index}}" class="matrix-row" ng-click=vm.showArticlesMatrix(key)>
-					<!--i class="fa fa-comments" aria-hidden="true" ng-click=vm.showArticlesMatrix(key)> {{value.title}}</i-->
-					{{value.title}}
+
+				<div class="matrix-row" ng-click="vm.showArticlesMatrix(key)">
+					<div class="indicator-topic">{{value.topic_title}}</div>
+					<pd ng-mouseenter="vm.paintIndicator($event)">{{value.title}}</pd>
 				</div>
 			</div>
 
+			<!-- the selected debate -->
 			<div class="matrix-row" ng-show="vm.bDebateSelected" ng-click="vm.bDebateSelected = !vm.bDebateSelected">
 				{{vm.selectedDebate.title}}
 			</div>
@@ -36,28 +47,30 @@
 		
 		<div ng-show="vm.bDebateSelected">
         	<div id="fade-left"></div>
-
+ 			<div id="fade-right"></div>
         	<div> <!-- articles -->
 	    		<div class="matrix-columns">
 	    			<div ng-repeat="(keyA, valueA) in vm.articles">
 						
-							<div class="matrix-column" ng-click="vm.showArticle(keyA)" ng-show="vm.bShowArticleMatrix">
+						<div class="matrix-column" ng-click="vm.showArticle(keyA, $event)" ng-show="vm.bShowArticleMatrix">
 								
-								<figure class="avatar avatar-sm" ng-mouseover="vm.showAuthor()"></figure>
-
-								<div ng-bind-html=valueA.headline class="dp-matrix-head"></div>
-								<div class="dp-matrix-text">
-									<!--{{valueA.published.date}}
-									{{valueA.subheadline}}
-									{{valueA.teaser}}
-									{{valueA.text}}-->
-									<div ng-bind-html=valueA.text></div>
-								</div>
-						
+							<!--ng-bind-html figure class="avatar avatar-sm" ng-mouseover="vm.showAuthor()"></figure-->
+							<div compile=valueA.headline class="dp-matrix-head"></div>
+							<div class="dp-matrix-text">
+								<!--{{valueA.published.date}}
+								{{valueA.subheadline}}
+								{{valueA.teaser}}
+								{{valueA.text}}-->
+								<div ng-bind-html=valueA.text></div>
+							</div>
 						</div>
-
-						
 	    			</div>
+
+					<!-- the moving articles indicator -->
+		    		<div id="indicator-article" class="indicator" ng-style=vm.articleIndicatorStyle ng-show="vm.bDebateSelected">
+						<div class="indicator-line indicator-red"></div>
+						<div class="indicator-highlight indicator-red" ng-style=vm.articleIndicatorStyleHighlight></div>
+					</div>
 	    		</div>
 	    	</div>
 
@@ -75,13 +88,13 @@
 		    </div>
 
 
- 			<div id="fade-right"></div>
 
- 			<div id="indicator">
- 				<div id="indicator-line"></div>
- 				<div id="indicator-thickline"></div>
- 				<div id="indicator-text">bla</div>
- 				<d3bubble-me id="indicator-chart" chart-data="vm.bubbleData"></d3bubble-me>
+
+ 			<div class="indicator">
+ 				<div class="indicator-line indicator-red"></div>
+ 				<div class="indicator-highlight indicator-red"></div>
+ 				<div class="indicator-text">bla</div>
+ 				<d3bubble-me class="indicator-chart" chart-data="vm.bubbleData"></d3bubble-me>
  			</div>
     	</div>
 
