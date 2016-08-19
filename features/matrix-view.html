@@ -20,7 +20,7 @@
 	</section-->
 
 
-    <section id="content">
+    <section id="matrix">
     
     	<div>
 
@@ -61,24 +61,44 @@
 								{{valueA.subheadline}}
 								{{valueA.teaser}}
 								{{valueA.text}}-->
-								<div ng-bind-html=valueA.text></div>
+								<div compile-txt ng-bind-html=valueA.text_trusted></div>
 							</div>
 						</div>
 	    			</div>
 
 					<!-- the moving articles indicator -->
 		    		<div id="indicator-article" class="indicator" ng-style=vm.articleIndicatorStyle ng-show="vm.bDebateSelected">
-						<div class="indicator-line indicator-red"></div>
-						<div class="indicator-highlight indicator-red" ng-style=vm.articleIndicatorStyleHighlight></div>
+						
+						<div class="indicator-line" ng-style=vm.indicatorColor></div>
+						<pie-container class="pie-container-pro">
+							<pie class="pie-pro"></pie>
+						    <pie class="pie-pro"></pie>
+						    <pie class="pie-pro"></pie>
+						    <pie class="pie-pro"></pie>
+						    <pie class="pie-pro"></pie>
+						    <pie class="pie-pro"></pie>
+						    <pie class="pie-pro"></pie>
+						    <pie class="pie-pro"></pie>
+						</pie-container>
+						<div class="indicator-highlight" ng-style="vm.articleIndicatorStyleHighlight"></div>
+
+						  <pie-container class="pie-container-con">
+						    <pie class="pie-con"></pie>
+						    <pie class="pie-con"></pie>
+						    <pie class="pie-con"></pie>
+						    <pie class="pie-con"></pie>
+						  </pie-container>
+
+						<div class="indicator-text">{{vm.lastThesisText}}</div>
 					</div>
 	    		</div>
 	    	</div>
 
-			<div> <!-- article full -->
+			<!--div> <- article full ->
 		    	<div class="matrix-details" ng-show="vm.bShowArticle">
 		    			buh!
 		    	</div>
-		    </div>
+		    </div-->
 
 
 			<div> <!-- author -->
@@ -98,38 +118,13 @@
  			</div>
     	</div>
 
-
-    	<!--div>
-
-    		<div class="matrix-column">
-		        
-		        <div class="card">
-			        
-		        	<div class="card-header">
-		
-		        	    <h4 class="card-title">{{value.title}}</h4>
-		        		<h6 class="card-meta">{{value.published.date}}</h6>
-		        	</div>
-		        	<div class="card-body flip-container">
-		        		<div class="flip-object" ng-class="vm.class">
-			        		<figure class="flip-front">
-			        			{{value.teaser}} ...
-			        		</figure>
-			        		<figure class="flip-back">
-		    					<d3bubble-me chart-data="10,20,30,40,60"></d3bubble-me>
-		    				</figure>
-						</div>
-	    			</div>
-		    		<div class="card-footer">
-		        		<a class="btn btn-default" href="#articles/{{value.id}}">zu den Artikeln ... </a>
-		    		</div>
-			    	
-				</div>
-			</div>
-		</div-->
 	</section>
 
+	<section id="visual">
+		
 
+	</section>
+		
 	<!--br>
 	<hr>
 	{{vm.debattes}}-->

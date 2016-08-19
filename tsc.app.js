@@ -11,26 +11,44 @@ var tscapp = angular
     .controller('tscAppCtrl', tscAppCtrl)
     .config(route)
     .directive('compile', ['$compile', function ($compile) {
-    return function(scope, element, attrs) {
-        scope.$watch(
-            function(scope) {
-                // watch the 'compile' expression for changes
-                return scope.$eval(attrs.compile);
-            },
-            function(value) {
-                // when the 'compile' expression changes
-                // assign it into the current DOM
-                element.html(value);
+        return function(scope, element, attrs) {
+            scope.$watch(
+                function(scope) {
+                    // watch the 'compile' expression for changes
+                    return scope.$eval(attrs.compile);
+                },
+                function(value) {
+                    // when the 'compile' expression changes
+                    // assign it into the current DOM
+                    element.html(value);
 
-                // compile the new DOM and link it to the current
-                // scope.
-                // NOTE: we only compile .childNodes so that
-                // we don't get into infinite loop compiling ourselves
-                $compile(element.contents())(scope);
+                    // compile the new DOM and link it to the current
+                    // scope.
+                    // NOTE: we only compile .childNodes so that
+                    // we don't get into infinite loop compiling ourselves
+                    $compile(element.contents())(scope);
+                }
+            );
+        };
+    }])
+    .directive('compileTxt', function($compile, $parse) {
+        return {
+            restrict: 'A',
+            link: function(scope, element, attr) {
+              var parsed = $parse(attr.ngBindHtml);
+              
+              //Recompile if the template changes
+              scope.$watch(
+                function() { 
+                  return (parsed(scope) || '').toString(); 
+                }, 
+                function() {
+                    $compile(element, null, -9999)(scope);  //The -9999 makes it skip directives so that we do not recompile ourselves
+                }
+              );
             }
-        );
-    };
-}]);
+        };
+    });
 
 tscAppCtrl.$inject = ['tscApi'];
 function tscAppCtrl(tscApi){

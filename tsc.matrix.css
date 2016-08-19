@@ -66,7 +66,7 @@ body{
     }
 }
 
-#content-meta{
+/*#content-meta{
     position: fixed;
     top: 0;
     left: 0;
@@ -77,13 +77,19 @@ body{
     background: rgba(255, 255, 255, 0.6);
     margin-left: auto;
     margin-right: auto;
-}
+}*/
 
-#content{
+#matrix{
     margin-top: 1em;
     width: 100%;
     height: 100%;
 }
+#visual{
+    margin-top: 1em;
+    width: 100%;
+    height: 100%;
+}
+
 #fade-left{
     width: 5%;
     height: 100%;
@@ -116,13 +122,13 @@ body{
     height: 1px;
     width: 100%;
     position: relative;
-    left:40px;
+    /*left:40px;*/
 }
 .indicator-highlight{
     height: 7px;
     width: 10em;
     position: relative;;
-    left: 40px;
+    /*left: 40px;*/
 }
 .indicator-topic{
     position: absolute;;
@@ -131,18 +137,26 @@ body{
     font-weight: normal;
     padding-top: 25px;
 }
-.indicator-red{
-    background-color: red;
-}
 .indicator-black{
     background-color: black;
 }
+/*.indicator-pro{
+    background-color: rgb(0,138,130);
+}
+.indicator-con{
+    background-color: rgb(225,0,26);
+}*/
 .indicator-text{
     float: left;
     position: relative;
     margin-top: 7px;
-    font-size: 17px;
+    font-size: 20px;
     color: black;
+    width: 10em;
+    background: -moz-linear-gradient(top, rgba(255,255,255,1) 25%, rgba(255,255,255,0) 100%);
+    background: -webkit-linear-gradient(top, rgba(255,255,255,1) 25%,rgba(255,255,255,0) 100%);
+    background: linear-gradient(to bottom, rgba(255,255,255,1) 25%,rgba(255,255,255,0) 100%);
+
 }
 .indicator-chart{
 
@@ -174,6 +188,9 @@ body{
     /*padding: 2px;*/
     scroll-snap-align: center none;
 }
+.matrix-column-read{
+    width: 60%;
+}
 .matrix-column:hover{
     background-color: rgb(205,231,231);
 }
@@ -194,7 +211,7 @@ body{
 
 }
 .dp-thesis{
-    color: black;
+    color: rgb(50,50,50);
     font-size: 6pt;
     line-height: 1.5em;
     margin: 0px;
@@ -210,6 +227,8 @@ body{
 }
 .matrix-column.p{
     margin: 0px;
+      scroll-snap-type: mandatory;
+  scroll-snap-points-y: repeat(100%);
 }
 .matrix-column.p.a{
     text-decoration: none;
@@ -241,23 +260,36 @@ a, a:focus, a:hover {
     padding: 0 20px;
 }
 
-.dots-pro {
-        line-height: 1;
-        font-weight: bold;
-        padding: 12px;
-        background: rgba(204, 204, 204, 0.8);
-        color: darkgreen;
-        border-radius: 12px;
-      }
 
-.dots-con {
-        line-height: 1;
-        font-weight: bold;
-        padding: 12px;
-        background: rgba(204, 204, 204, 0.8);
-        color: darkred;
-        border-radius: 12px;
-
-
-      }
-
+/*the dots chart*/
+pie-container{
+  width:30px;
+  display:block;
+  position:absolute;
+  right:5em;
+}
+.pie-container-pro{
+  transform:scaleX(-1);
+  /*margin-bottom:10em;*/
+  transform:scaleY(-1);
+}
+pie{
+    width: 6px;
+    height: 6px;
+    display: block;
+    border-radius: 50%;
+    float: left;
+    margin: 2px;
+}
+.pie-pro {
+    background-color: green;
+    /*right: 0px;
+    //border: 2px solid green;*/
+}
+.pie-container-con{
+  transform:scaleX(-1);
+  margin-top: 3em;
+}
+.pie-con {
+    background-color: red;
+}

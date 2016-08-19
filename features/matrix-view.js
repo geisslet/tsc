@@ -20,6 +20,9 @@ function tscMatrixViewCtrl($log, tscApi, $routeParams,$sce){
 
 	vm.articleIndicatorStyle={top: -1+'px'};
 	vm.articleIndicatorStyleHighlight={};
+	vm.indicatorColor={ 'background-color': 'black' };
+	vm.lastThesisID = '';
+	vm.lastThesisText = '';
 
 	vm.activate = function _activate(){
 
@@ -63,39 +66,51 @@ function tscMatrixViewCtrl($log, tscApi, $routeParams,$sce){
 
 
 	vm.paintIndicator = function _paintIndicator($event){
-		/*$log.debug("offsetTop: "+angular.element($event.target).prop('offsetTop'));
-		$log.debug("offsetWidth: "+angular.element($event.target).prop('offsetWidth'));
-		$log.debug("offsetHeight: "+angular.element($event.target).prop('offsetHeight'));
-		$log.debug("length: "+angular.element($event.target).prop('length'));
-		$log.debug("event.offsetX: "+angular.element($event.target).prop('event.offsetX'));
-		$log.debug("event.offsetY: "+angular.element($event.target).prop('event.offsetY'));
-		$log.debug("event.target: "+angular.element($event.target));*/
+		
 		var dist = angular.element($event.target).prop('offsetTop') + angular.element($event.target).prop('offsetHeight');
-		vm.indicatorStyle = { top: dist +'px'};//'{"background-color":"yellow"}';
-		$log.debug("vm.indicatorStyle: " + vm.indicatorStyle);
+		vm.indicatorStyle = { top: dist +'px', left: angular.element($event.target).prop('offsetLeft')+'px'};
+		$log.debug("vm.indicatorStyle: " + JSON.stringify(vm.indicatorStyle));
+		
 		vm.indicatorStyleHighlight = {width: angular.element($event.target).prop('offsetWidth') + 'px'};
-		$log.debug("vm.indicatorStyleHighlight: " + vm.indicatorStyleHighlight);
+		$log.debug("vm.indicatorStyleHighlight: " + JSON.stringify(vm.indicatorStyleHighlight));
 		//angular.element( document.querySelector('#indicator-debates').attr("left",offsetTop);
 	};
 	vm.paintArticleIndicator = function _paintArticleIndicator($event){
-		$log.debug("offsetTop: "+angular.element($event.target).prop('offsetTop'));
+
+		console.log($event);
+		vm.lastThesisID = angular.element($event.target).prop('id');
+		vm.lastThesisText = angular.element($event.target).prop('innerText');
+
+		/*$log.debug("offsetTop: "+angular.element($event.target).prop('offsetTop'));
 		$log.debug("offsetWidth: "+angular.element($event.target).prop('offsetWidth'));
 		$log.debug("offsetHeight: "+angular.element($event.target).prop('offsetHeight'));
-		$log.debug("length: "+angular.element($event.target).prop('length'));
-		$log.debug("event.offsetX: "+angular.element($event.target).prop('event.offsetX'));
-		$log.debug("event.offsetY: "+angular.element($event.target).prop('event.offsetY'));
-		$log.debug("event.target: "+angular.element($event.target));
+		$log.debug("offsetLeft: "+angular.element($event.target).prop('offsetLeft'));
+		$log.debug("event.target: "+angular.element($event.target));*/
+
+		
 		var dist = angular.element($event.target).prop('offsetTop') + angular.element($event.target).prop('offsetHeight');
-		vm.articleIndicatorStyle = { top: dist +'px'};//'{"background-color":"yellow"}';
-		$log.debug("vm.articleIndicatorStyle: " + vm.articleIndicatorStyle);
-		vm.articleIndicatorStyleHighlight = {width: angular.element($event.target).prop('offsetWidth') + 'px'};
-		$log.debug("vm.articleIndicatorStyleHighlight: " + vm.articleIndicatorStyleHighlight);
+		var width = window.innerWidth - angular.element($event.target).prop('offsetLeft');
+		
+		var color = (1==1)?'rgb(0,138,130)':'rgb(225,0,26)';
+
+		vm.articleIndicatorStyle = { top: dist +'px', left: angular.element($event.target).prop('offsetLeft')+'px', width: width + 'px'};
+		
+		$log.debug("vm.articleIndicatorStyle: " + JSON.stringify(vm.articleIndicatorStyle));
+		
+		vm.articleIndicatorStyleHighlight = {width: angular.element($event.target).prop('offsetWidth') + 'px', 'background-color': color};
+		vm.indicatorColor = { 'background-color':color};
+		$log.debug("vm.articleIndicatorStyleHighlight: " + JSON.stringify(vm.articleIndicatorStyleHighlight));
 	
+
 	};
 
-	vm.showAlert = function _alertTest(){
-		$log.debug("alert");
-		alert("alert");
+	vm.switch2Visual = function(){
+
+	};
+
+	vm.showAlert = function _alertTest($event){
+		$log.debug("showAlert " + JSON.stringify($event));
+		alert("showAlert "+ JSON.stringify($event));
 	};
 
 	vm.gotoAnchor = function(x) {

@@ -4,8 +4,8 @@ var api = angular
     .service('tscApi', tscApi);
 
 // service implementation
-tscApi.$inject = ['$http','$q', '$filter']; 
-function tscApi ($http, $q, $filter) {
+tscApi.$inject = ['$http','$q', '$filter','$sce']; 
+function tscApi ($http, $q, $filter,$sce) {
 
     console.log('tscApi instanciated.');
 
@@ -138,8 +138,8 @@ function tscApi ($http, $q, $filter) {
             */
             for(var k in vA){
                 vA[k].text = vA[k].text.replace(/data-id/gi, "id");
-                vA[k].text = vA[k].text.replace(/class=/gi, "ng-click=vm.showAlert() ng-mouseenter=vm.paintArticleIndicator($event) class=");
-                vA[k].text = $sce.trustAsHtml(vA[k].text);
+                vA[k].text = vA[k].text.replace(/class=/gi, "ng-click=vm.showAlert($event) ng-mouseenter=vm.paintArticleIndicator($event) class=");
+                vA[k]["text_trusted"] = $sce.trustAsHtml(vA[k].text);
                 vA[k]["theses"] = filterListToArray(mainFile.articles_theses, "article", k); 
             }
 
