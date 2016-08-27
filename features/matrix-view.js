@@ -1,8 +1,8 @@
 angular.module('tsc')
     .controller('tscMatrixViewCtrl', tscMatrixViewCtrl);
 
-tscMatrixViewCtrl.$inject = ['$log', 'tscApi', '$routeParams','$sce'];
-function tscMatrixViewCtrl($log, tscApi, $routeParams,$sce){
+tscMatrixViewCtrl.$inject = ['$log', 'tscApi', '$routeParams','$sce','$location','$anchorScroll'];
+function tscMatrixViewCtrl($log, tscApi, $routeParams,$sce,$location,$anchorScroll){
 	var vm = this;
 
 	vm.debates = {};
@@ -29,16 +29,17 @@ function tscMatrixViewCtrl($log, tscApi, $routeParams,$sce){
 		$log.debug("tscMatrixViewCtrl.activate " + JSON.stringify($routeParams));
 
 		tscApi.getDebates().then(function success(response){
-			$log.debug("tscMatrixViewCtrl " + response);
+			$log.debug("tscMatrixViewCtrl.activate.getDebates " + response);
 			vm.debates = response;
 
 		}, function fail(response){
 			$log.debug("tscMatrixViewCtrl.fail: " + response);	
 		});
+
 	};
 	
 	vm.setDebateSelected = function _setDebateSelected(){
-			vm.bDebateSelected=true;
+		vm.bDebateSelected=true;
 	};
 
 	vm.showArticlesMatrix = function _articleMatrix(debateId){
@@ -49,19 +50,27 @@ function tscMatrixViewCtrl($log, tscApi, $routeParams,$sce){
 
 		// get the article
 		tscApi.getArticlesOfDebate(debateId).then(function success(response){
-			$log.debug("tscMatrixViewCtrl.showArticlesMatrix.getArticlesOfDebate " + response);
+			$log.debug("tscMatrixViewCtrl.showArticlesMatrix.getArticlesOfDebate ");
+			console.log(response);
 			vm.articles = response;
 		});
 
 		// get data for the bubble chart
 		tscApi.getVotesDataOfDebate(debateId).then(function success(response){
-			$log.debug("tscMatrixViewCtrl.showArticlesMatrix.getVotesDataOfDebate " + JSON.stringify(response));
+			$log.debug("tscMatrixViewCtrl.showArticlesMatrix.getVotesDataOfDebate")
+			console.log(response);
 			vm.bubbleData = response;
 		});
+
 	};
 
-	vm.ShowArticle = function _articeDetail(keyA, $event){
+	vm.showArticle = function _articeDetail(keyA, $event){
 		$log.debug("ShowArticle: " + keyA + " / " + JSON.stringify($event));
+
+
+		//vm.bubbleData = tscApi.getVotesDataOfDebate(vm.selectedDebate['id']);
+
+
 	};
 
 
@@ -104,8 +113,30 @@ function tscMatrixViewCtrl($log, tscApi, $routeParams,$sce){
 
 	};
 
-	vm.switch2Visual = function(){
+	vm.switch2Visual = function _switch2Visual(){
+		alert("switch2Visual");
+	};
 
+	vm.gotoAnchor = function _gotoAnchor(){
+
+
+/*
+		var newHash = '01561566eabf0d890ee3570946ef1da7';
+		$log.debug("gotoAnchor: " + newHash);
+
+		if ($location.hash() !== newHash) {
+			$log.debug("gotoAnchor "+newHash);
+			// set the $location.hash to `newHash` and
+			// $anchorScroll will automatically scroll to it
+			$location.hash(newHash);
+			$anchorScroll();
+		} else {
+			// call $anchorScroll() explicitly,
+			// since $location.hash hasn't changed
+			$log.debug("gotoAnchor scroll");
+			$anchorScroll();
+		}*/
+    
 	};
 
 	vm.showAlert = function _alertTest($event){
@@ -113,16 +144,4 @@ function tscMatrixViewCtrl($log, tscApi, $routeParams,$sce){
 		alert("showAlert "+ JSON.stringify($event));
 	};
 
-	vm.gotoAnchor = function(x) {
-      var newHash = 'anchor' + x;
-      if ($location.hash() !== newHash) {
-        // set the $location.hash to `newHash` and
-        // $anchorScroll will automatically scroll to it
-        $location.hash('anchor' + x);
-      } else {
-        // call $anchorScroll() explicitly,
-        // since $location.hash hasn't changed
-        $anchorScroll();
-      }
-    };
 }

@@ -40,6 +40,7 @@ function d3bubbleMe($parse){
             // With this convention, all subsequent code can ignore margins
 
 
+/* TG
             var tip = d3.tip()
               .attr("class", "d3-tip")
               .offset([-10, 0])
@@ -48,10 +49,15 @@ function d3bubbleMe($parse){
 
                     return d; 
               });
-
+*/
             // define some data
 
             var dataset = scope.data;//[[10, 10], [20, 20], [16, 0], [30, 12], [38, -30]];
+
+            console.log(dataset);
+
+            if (dataset === undefined)
+            	return;
 
 
             // set the ranges
@@ -80,7 +86,7 @@ function d3bubbleMe($parse){
                 .style("opacity", 0.2); 
 
 
-            canvas.call(tip);
+//TG            canvas.call(tip);
 
             var circles = canvas.selectAll(".circle")
                 .data(dataset)

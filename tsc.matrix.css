@@ -149,14 +149,19 @@ body{
 .indicator-text{
     float: left;
     position: relative;
-    margin-top: 7px;
+    /*margin-top: 7px;*/
     font-size: 20px;
     color: black;
-    width: 10em;
-    background: -moz-linear-gradient(top, rgba(255,255,255,1) 25%, rgba(255,255,255,0) 100%);
-    background: -webkit-linear-gradient(top, rgba(255,255,255,1) 25%,rgba(255,255,255,0) 100%);
-    background: linear-gradient(to bottom, rgba(255,255,255,1) 25%,rgba(255,255,255,0) 100%);
+    width: 75%;
+background: -moz-radial-gradient(center, ellipse cover, rgba(255,255,255,1) 0%, rgba(255,255,255,0.46) 70%, rgba(255,255,255,0) 100%);
+background: -webkit-radial-gradient(center, ellipse cover, rgba(255,255,255,1) 0%,rgba(255,255,255,0.46) 70%,rgba(255,255,255,0) 100%);
+background: radial-gradient(ellipse at center, rgba(255,255,255,1) 0%,rgba(255,255,255,0.46) 70%,rgba(255,255,255,0) 100%);
 
+/*
+background: -moz-linear-gradient(top, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 30%,rgba(255,255,255,1) 70%,rgba(255,255,255,0) 100%);
+background: -webkit-linear-gradient(top, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 30%,rgba(255,255,255,1) 70%,rgba(255,255,255,0) 100%);
+background: linear-gradient(to bottom, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 30%,rgba(255,255,255,1) 70%,rgba(255,255,255,0) 100%);
+*/
 }
 .indicator-chart{
 
@@ -177,6 +182,7 @@ body{
     margin-left: 40px;
     /*scroll-snap-points-x: repeat(2em);*/
     scroll-snap-type: mandatory;
+    scroll-snap-points-x: repeat(12em);
 }
 .matrix-column{
     width: 12em;
@@ -186,10 +192,12 @@ body{
     margin: 10px;
     padding: 3px;
     /*padding: 2px;*/
+    scroll-snap-coordinate: 50% 50%;
     scroll-snap-align: center none;
+
 }
-.matrix-column-read{
-    width: 60%;
+.matrix-column:read{
+    width: 50em;
 }
 .matrix-column:hover{
     background-color: rgb(205,231,231);
@@ -227,8 +235,8 @@ body{
 }
 .matrix-column.p{
     margin: 0px;
-      scroll-snap-type: mandatory;
-  scroll-snap-points-y: repeat(100%);
+    scroll-snap-type: mandatory;
+    scroll-snap-points-y: repeat(100%);
 }
 .matrix-column.p.a{
     text-decoration: none;

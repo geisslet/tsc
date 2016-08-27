@@ -20,6 +20,7 @@ var tscapp = angular
                 function(value) {
                     // when the 'compile' expression changes
                     // assign it into the current DOM
+                    console.log("compile: " + value);
                     element.html(value);
 
                     // compile the new DOM and link it to the current

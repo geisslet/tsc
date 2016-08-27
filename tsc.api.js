@@ -73,7 +73,6 @@ function tscApi ($http, $q, $filter,$sce) {
         });
     };
 
-
     // we assume that this is called first all time!
     this.getTopics = function _topics() {
         console.log("tscApi.getTopics");
@@ -91,7 +90,7 @@ function tscApi ($http, $q, $filter,$sce) {
     };
 
     this.getDebates = function _debates(topicId) {
-        console.log("tscApi.getDebates for " + topicId);
+        console.log("tscApi.getDebates for " + topicId + " (undefined means all)");
 
         return $q(function(resolve, reject){
             do {
@@ -138,7 +137,7 @@ function tscApi ($http, $q, $filter,$sce) {
             */
             for(var k in vA){
                 vA[k].text = vA[k].text.replace(/data-id/gi, "id");
-                vA[k].text = vA[k].text.replace(/class=/gi, "ng-click=vm.showAlert($event) ng-mouseenter=vm.paintArticleIndicator($event) class=");
+                vA[k].text = vA[k].text.replace(/class=\"/gi, "ng-click=vm.showAlert($event) ng-mouseenter=vm.paintArticleIndicator($event) class=\"anchor ");
                 vA[k]["text_trusted"] = $sce.trustAsHtml(vA[k].text);
                 vA[k]["theses"] = filterListToArray(mainFile.articles_theses, "article", k); 
             }
@@ -147,16 +146,30 @@ function tscApi ($http, $q, $filter,$sce) {
         });
     };
 
+/*
+
+{
+    bubbles:[[count,sum],[count,sum],[count,sum] ..],
+    theses: [{topic:"", author:"", pro:"", con:"", arrayIndex: 0}]
+
+}
+
+*/
     this.getVotesDataOfDebate = function _voteDataOfDebate(debateId){
         console.log("tscApi.getVotesDataOfDebate");
 
         return $q(function(resolve, reject){ 
 
-            var data = [];
+            var votes = [];
+            var bubbles = [];
+            var theses = [];
 
+            // 1. get all votes of debate
             var votesOfDebate = filterListToArray(mainFile.votes, "debate", debateId);
 
-            // get list of all thesis
+            //console.log(JSON.stringify(votesOfDebate));
+
+            // 2. get unique id list of all thesis
             var listOfTheses = [];
             for(var thesis in votesOfDebate) {
                 
@@ -167,7 +180,7 @@ function tscApi ($http, $q, $filter,$sce) {
 
             }
 
-            // build the array
+            // 3. build the bubble array and build display info in same sequence
             for(var t in listOfTheses){
                 var v = filterListToArray(votesOfDebate, "thesis", listOfTheses[t]);
                 var sum = 0;
@@ -176,11 +189,26 @@ function tscApi ($http, $q, $filter,$sce) {
                    sum = sum+ parseInt(v[v2]["vote"]);
                 }
 
-                data.push([v.length, sum]);
+                bubbles.push([v.length, sum]);
+
+                var thesis = mainFile.theses[listOfTheses[t]]; 
+                thesis['author'] = mainFile.authors[thesis['created_by']];
+                thesis['arrayIndex'] = t;
+                thesis['key'] = listOfTheses[t];   
+                theses.push(thesis);
+
             }
             
 
-            resolve(data);    
+            votes['bubbles'] = bubbles;
+            votes['theses'] = theses;
+
+            //console.log(votes);
+            //console.log(bubbles);
+            //console.log(theses);
+
+
+            resolve(votes);    
         });
     };
 

@@ -52,11 +52,12 @@
 	    		<div class="matrix-columns">
 	    			<div ng-repeat="(keyA, valueA) in vm.articles">
 						
-						<div class="matrix-column" ng-click="vm.showArticle(keyA, $event)" ng-show="vm.bShowArticleMatrix">
+						<div class="matrix-column" ng-show="vm.bShowArticleMatrix" ng-mouseenter="vm.gotoAnchor()" ng-click="vm.showArticle(keyA, $event)">
 								
 							<!--ng-bind-html figure class="avatar avatar-sm" ng-mouseover="vm.showAuthor()"></figure-->
-							<div compile=valueA.headline class="dp-matrix-head"></div>
-							<div class="dp-matrix-text">
+							<div class="dp-matrix-head">{{valueA.headline}}</div>
+							
+							<div class="dp-matrix-text" ng-mouseenter="vm.gotoAnchor()">
 								<!--{{valueA.published.date}}
 								{{valueA.subheadline}}
 								{{valueA.teaser}}
@@ -68,17 +69,21 @@
 
 					<!-- the moving articles indicator -->
 		    		<div id="indicator-article" class="indicator" ng-style=vm.articleIndicatorStyle ng-show="vm.bDebateSelected">
+
+		    			<!-- ng-repeat="vm.bubbleData.bubbles.length"-->
 						
+						{{vm.bubbleData.bubbles}}
+
 						<div class="indicator-line" ng-style=vm.indicatorColor></div>
 						<pie-container class="pie-container-pro">
 							<pie class="pie-pro"></pie>
+						    <!--pie class="pie-pro"></pie>
 						    <pie class="pie-pro"></pie>
 						    <pie class="pie-pro"></pie>
 						    <pie class="pie-pro"></pie>
 						    <pie class="pie-pro"></pie>
 						    <pie class="pie-pro"></pie>
-						    <pie class="pie-pro"></pie>
-						    <pie class="pie-pro"></pie>
+						    <pie class="pie-pro"></pie-->
 						</pie-container>
 						<div class="indicator-highlight" ng-style="vm.articleIndicatorStyleHighlight"></div>
 
@@ -110,19 +115,18 @@
 
 
 
- 			<div class="indicator">
+ 			<!--div class="indicator">
  				<div class="indicator-line indicator-red"></div>
  				<div class="indicator-highlight indicator-red"></div>
  				<div class="indicator-text">bla</div>
- 				<d3bubble-me class="indicator-chart" chart-data="vm.bubbleData"></d3bubble-me>
- 			</div>
+ 				
+ 			</div-->
     	</div>
 
 	</section>
 
 	<section id="visual">
-		
-
+		<d3bubble-me class="indicator-chart" chart-data="vm.bubbleData.bubbles"></d3bubble-me>
 	</section>
 		
 	<!--br>
