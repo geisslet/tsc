@@ -1,8 +1,9 @@
-
+	
 angular.module('tsc')
     .directive('d3bubbleMe', d3bubbleMe);
 
-function d3bubbleMe($parse){
+d3bubbleMe	.$inject = ['$log', 'tscApi'];
+function d3bubbleMe($parse, tscApi){
      //explicitly creating a directive definition variable
      //this may look verbose but is good for clarification purposes
      //in real life you'd want to simply return the object {...}
@@ -40,7 +41,7 @@ function d3bubbleMe($parse){
                 .append("g")
                 .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-         	scope.$watch('vm.bubbleData.bubbles', function(newData, oldData){
+         	scope.$watch('vm.bubbleData', function(newData, oldData){
 
          		console.log("newData");
          		console.log(newData);
@@ -50,22 +51,42 @@ function d3bubbleMe($parse){
 	            var tip = d3.tip()
 	              .attr("class", "d3-tip")
 	              .offset([-10, 0])
-	              .html(function(d) {
-	                //example:
+	              .html(function(d,i) {
 
-	                    return d; 
+	              		var thesis = newData.theses[i];
+	                	//console.log(JSON.stringify(newData.theses[i]));
+	                	console.log(thesis);
+
+	                	var tip = "<h1>point "+i+"</h1>"+d;
+
+
+
+	                	try{
+		                	tip = tip + "<br>" + thesis.text;
+		                	tip = tip + thesis.vote_pro;
+		                	tip = tip + "<hr>";
+		                	tip = tip + thesis.vote_con; 
+		                	//tip =+ thesis["author"]["first_name"] + " " + thesis["author"]["last_name"];
+		                	//tip =+ "<img src='http://tagesspiegel/" +thesis["author"].images.portrait+"'' />";
+						}catch(err){
+							console.log(err);
+						}
+
+	                	try{
+	                		tscApi.dummycall();
+	                	}catch(err){console.log(err)}
+
+	                	//for (var thesis in newData.theses) {}
+	                
+	                    return tip; 
 	              });
-				// define some data
-				//scope.$parent.vm.bubbleData.bubbles
-	            var dataset = [[10, 10], [20, 20], [16, 0], [30, 12], [38, -30]];
-				console.log("--------------");
-				console.log(scope.$id);
-				console.log(scope.chartData);
-	            console.log(dataset);
-	            console.log("--------------");
+
+	            var dataset = newData.bubbles;// [[10, 10], [20, 20], [16, 0], [30, 12], [38, -30]];
 
 	            if (dataset === undefined)
 	            	return;
+
+	            canvas.selectAll("*").remove();
 
 
 	            // set the ranges
@@ -86,14 +107,13 @@ function d3bubbleMe($parse){
 	            var line = canvas.append("line")
 	                .attr("x1", 0)
 	                .attr("y1", height/2)
-	                .attr("x2", width/2)
+	                .attr("x2", width)
 	                .attr("y2", height/2)
 	                .attr("stroke-width", 2)
 	                .attr("stroke", "darkcyan")
 	                .style("stroke-dasharray", ("2, 2"))
 	                .style("opacity", 0.2); 
-
-	//TG            canvas.call(tip);
+		            canvas.call(tip);
 
 	            var circles = canvas.selectAll(".circle")
 	                .data(dataset)
@@ -103,16 +123,17 @@ function d3bubbleMe($parse){
                     .attr("cx", function (a,i) {return i * 60 + 10;})
                     .attr("cy", function(a) {return height/2;})
                     .attr("r", 5)
+                    //.attr("text", function(a,i){ return newData.theses[i]["text"]})
 	                .on("mouseover", tip.show)
 	                .on("mouseout", tip.hide)
 	                .transition()
-	                .delay(function(d, i) { return i * 1000;})
-	                .duration(1000)
+	                .delay(function(d, i) { return i * 200;})
+	                .duration(200)
 
 	              // calculate the new radius on the data (circle area as measure)
-	                .attr("r", function(a) { return Math.sqrt(a[0]*10/Math.PI);})
+	                .attr("r", function(a) { return Math.sqrt(a[0]*50/Math.PI);})
 	              // change position, depending on +/-VOTES -- Scale!!  
-	                .attr("cy", function(a) {return height/2 - 3*a[1];})    
+	                .attr("cy", function(a) {return height/2 - 5*a[1];})    
 	                // .style("opacity", .2)
 	                // .style("fill", "darkcyan")
 	                .style("stroke", "none");

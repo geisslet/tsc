@@ -14,7 +14,7 @@ function tscMatrixViewCtrl($log, tscApi, $routeParams,$sce,$location,$anchorScro
 	vm.bShowArticle=false;
 	vm.bShowAuthor=false;
 	vm.selectedDebate={};
-	vm.bubbleData = [];//[[10, 10], [20, 20], [16, 0], [30, 12], [38, -30]];
+	vm.bubbleData = [];
 	vm.indicatorStyle={top: -1+'px'};
 	vm.indicatorStyleHighlight={};
 
@@ -57,7 +57,7 @@ function tscMatrixViewCtrl($log, tscApi, $routeParams,$sce,$location,$anchorScro
 
 		// get data for the bubble chart
 		tscApi.getVotesDataOfDebate(debateId).then(function success(response){
-			$log.debug("tscMatrixViewCtrl.showArticlesMatrix.getVotesDataOfDebate")
+			$log.debug("tscMatrixViewCtrl.showArticlesMatrix.getVotesDataOfDebate");
 			console.log(response);
 			vm.bubbleData = response;
 		});
@@ -141,4 +141,31 @@ function tscMatrixViewCtrl($log, tscApi, $routeParams,$sce,$location,$anchorScro
 		alert("showAlert "+ JSON.stringify($event));
 	};
 
+	vm.voteProArrayFromNumberOfLastThesis = function _voteProArrayFromNumber() {
+		console.log("voteProArrayFromNumberOfLastThesis lastThesisID: " + vm.lastThesisID);
+
+		if (vm.lastThesisID === undefined)
+			return [];
+		
+		console.log("voteProArrayFromNumberOfLastThesis vm.bubbleData.theses[vm.lastThesisID]: " + JSON.stringify(vm.bubbleData.theses[vm.lastThesisID]));
+		if (vm.bubbleData.theses[vm.lastThesisID] === undefined)
+			return [];
+
+    	return new Array(vm.bubbleData.theses[vm.lastThesisID]["vote_pro"]);   
+	};
+
+	vm.voteConArrayFromNumberOfLastThesis = function _voteConArrayFromNumber() {
+
+		console.log("VoteConArrayFromNumberOfLastThesis lastThesisID: " + vm.lastThesisID);
+		if (vm.lastThesisID === undefined)
+			return [];
+
+
+		console.log("VoteConArrayFromNumberOfLastThesis vm.bubbleData.thesis[vm.lastThesisID]: " + JSON.stringify(vm.bubbleData.theses[vm.lastThesisID]));
+
+		if (vm.bubbleData.theses[vm.lastThesisID] === undefined)
+			return [];
+
+    	return new Array(vm.bubbleData.theses[vm.lastThesisID]["vote_con"]);   
+	};
 }

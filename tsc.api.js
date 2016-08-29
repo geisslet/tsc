@@ -315,6 +315,10 @@ function tscApi ($http, $q, $filter,$sce) {
     this.getAuthorsConVote = function _conVoteAuthors(thesisId){
 
     };
+
+    this.dummycall = function _dummy(){
+        console.log("api function dummycall. well. done.")
+    }
 }
 
 

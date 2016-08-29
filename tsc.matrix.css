@@ -301,3 +301,11 @@ pie{
 .pie-con {
     background-color: red;
 }
+
+.d3-tip{
+    background-color: white;
+    border-style: dotted;
+    border-color: lightgrey;
+    display: block;
+    width: 40%;
+}
