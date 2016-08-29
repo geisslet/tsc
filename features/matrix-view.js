@@ -68,9 +68,6 @@ function tscMatrixViewCtrl($log, tscApi, $routeParams,$sce,$location,$anchorScro
 		$log.debug("ShowArticle: " + keyA + " / " + JSON.stringify($event));
 
 
-		//vm.bubbleData = tscApi.getVotesDataOfDebate(vm.selectedDebate['id']);
-
-
 	};
 
 

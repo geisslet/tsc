@@ -16,14 +16,18 @@ function d3bubbleMe($parse){
          //we don't want to overwrite our directive declaration
          //in the HTML mark-up
          replace: false,
-         scope: {data: '=chartData'},
+         scope : true, 
+         //scope: {chartData: '=chartData'},
          link: function (scope, element, attrs) {
            
-            var margin = {top: 50, right: 30, bottom: 50, left: 30};
+         	console.log("d3bubbleMe.link called");
+         	console.log(scope);
+         	console.log(element);
+         	console.log(attrs);
 
+            var margin = {top: 50, right: 30, bottom: 50, left: 30};
             var width = 960 - margin.left - margin.right,
                 height = 500 - margin.top - margin.bottom;
-
 
             // var xAxis = d3.axisBottom(xScale);
             // var yAxis = d3.axisLeft(yScale);
@@ -34,119 +38,87 @@ function d3bubbleMe($parse){
                 .attr("width", width + margin.left + margin.right)
                 .attr("height", height + margin.top + margin.bottom)
                 .append("g")
-                    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-                    // .call(xAxis);
+                .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-            // With this convention, all subsequent code can ignore margins
+         	scope.$watch('vm.bubbleData.bubbles', function(newData, oldData){
 
-
-/* TG
-            var tip = d3.tip()
-              .attr("class", "d3-tip")
-              .offset([-10, 0])
-              .html(function(d) {
-                //example:
-
-                    return d; 
-              });
-*/
-            // define some data
-
-            var dataset = scope.data;//[[10, 10], [20, 20], [16, 0], [30, 12], [38, -30]];
-
-            console.log(dataset);
-
-            if (dataset === undefined)
-            	return;
+         		console.log("newData");
+         		console.log(newData);
+         		console.log(oldData);
 
 
-            // set the ranges
-            // var xScale = d3.scaleLinear()
-            //  .domain([0,d3.max(dataset)])
-            //     .range([0, width]);
+	            var tip = d3.tip()
+	              .attr("class", "d3-tip")
+	              .offset([-10, 0])
+	              .html(function(d) {
+	                //example:
 
-            // var yScale = d3.scaleLinear()
-            //     .range([height, 0]);
+	                    return d; 
+	              });
+				// define some data
+				//scope.$parent.vm.bubbleData.bubbles
+	            var dataset = [[10, 10], [20, 20], [16, 0], [30, 12], [38, -30]];
+				console.log("--------------");
+				console.log(scope.$id);
+				console.log(scope.chartData);
+	            console.log(dataset);
+	            console.log("--------------");
 
-            // adds the x and y axis
-
-            /*d3.select(".axis")
-                .call(d3.axisBottom(xScale))
-                .call(d3.axisLeft(yScale));
-            */
-
-            var line = canvas.append("line")
-                .attr("x1", 0)
-                .attr("y1", height/2)
-                .attr("x2", width/2)
-                .attr("y2", height/2)
-                .attr("stroke-width", 2)
-                .attr("stroke", "darkcyan")
-                .style("stroke-dasharray", ("2, 2"))
-                .style("opacity", 0.2); 
+	            if (dataset === undefined)
+	            	return;
 
 
-//TG            canvas.call(tip);
+	            // set the ranges
+	            // var xScale = d3.scaleLinear()
+	            //  .domain([0,d3.max(dataset)])
+	            //     .range([0, width]);
 
-            var circles = canvas.selectAll(".circle")
-                .data(dataset)
-                .enter().append("circle")
-                    // .style("fill", "darkcyan")
-                .attr("class", "circle")
+	            // var yScale = d3.scaleLinear()
+	            //     .range([height, 0]);
+
+	            // adds the x and y axis
+
+	            /*d3.select(".axis")
+	                .call(d3.axisBottom(xScale))
+	                .call(d3.axisLeft(yScale));
+	            */
+
+	            var line = canvas.append("line")
+	                .attr("x1", 0)
+	                .attr("y1", height/2)
+	                .attr("x2", width/2)
+	                .attr("y2", height/2)
+	                .attr("stroke-width", 2)
+	                .attr("stroke", "darkcyan")
+	                .style("stroke-dasharray", ("2, 2"))
+	                .style("opacity", 0.2); 
+
+	//TG            canvas.call(tip);
+
+	            var circles = canvas.selectAll(".circle")
+	                .data(dataset)
+	                .enter().append("circle")
+	                    // .style("fill", "darkcyan")
+	                .attr("class", "circle")
                     .attr("cx", function (a,i) {return i * 60 + 10;})
                     .attr("cy", function(a) {return height/2;})
                     .attr("r", 5)
-                
-                
-                
-                  // .on("mouseover", function(){
-               //    d3.select(this).transition().duration(300)
-               //      .style("fill", "red")
-               //      .style("opacity", 1);
-               //  })
+	                .on("mouseover", tip.show)
+	                .on("mouseout", tip.hide)
+	                .transition()
+	                .delay(function(d, i) { return i * 1000;})
+	                .duration(1000)
 
+	              // calculate the new radius on the data (circle area as measure)
+	                .attr("r", function(a) { return Math.sqrt(a[0]*10/Math.PI);})
+	              // change position, depending on +/-VOTES -- Scale!!  
+	                .attr("cy", function(a) {return height/2 - 3*a[1];})    
+	                // .style("opacity", .2)
+	                // .style("fill", "darkcyan")
+	                .style("stroke", "none");
 
-            /* check this out to make the mouseover more smooth ...
-
-
-            node.on('mouseout', function() {
-                  d3.select(".d3-tip")
-                  .transition()
-                    .delay(100)
-                    .duration(600)
-                    .style("opacity",0)
-                    .style('pointer-events', 'none')
-                  });*/
-
-
-
-                .on("mouseover", tip.show)
-                
-                // .on("mouseout", function(){
-                //   d3.select(this).transition().duration(300)
-                //     // .style("fill", "darkcyan")
-                //     .style("opacity", .2);
-                // })
-                .on("mouseout", tip.hide)
-
-                .transition()
-                .delay(function(d, i) { return i * 1000;})
-                .duration(1000)
-
-              // calculate the new radius on the data (circle area as measure)
-
-                    .attr("r", function(a) { return Math.sqrt(a[0]*10/Math.PI);})
-
-              // change position, depending on +/-VOTES -- Scale!!  
-                    
-                .attr("cy", function(a) {return height/2 - 3*a[1];})
-                    
-                // .style("opacity", .2)
-                    // .style("fill", "darkcyan")
-                .style("stroke", "none");
-
-                 } 
-      };
-      return directiveDefinitionObject;
-}
-
+			});//~watch
+      	} //~link
+  	} //~directiveDefinitionObject
+  	return directiveDefinitionObject;
+}//~d3bubbleMe

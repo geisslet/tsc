@@ -184,9 +184,29 @@ function tscApi ($http, $q, $filter,$sce) {
             for(var t in listOfTheses){
                 var v = filterListToArray(votesOfDebate, "thesis", listOfTheses[t]);
                 var sum = 0;
+                var pro = 0;
+                var con = 0;
+                var neutral = 0;
 
                 for(var v2 in v){
-                   sum = sum+ parseInt(v[v2]["vote"]);
+
+                    var vote = parseInt(v[v2]["vote"]) 
+                    sum = sum+ vote;
+
+                        switch(vote) {
+                        case 0:
+                            neutral=neutral+1;
+                            break;
+                        case -1:
+                            con=con+1;
+                            break;
+                        case 1:
+                            pro=pro+1;
+                            break;
+                        default:
+                            console.log(vote);
+                    } 
+
                 }
 
                 bubbles.push([v.length, sum]);
@@ -194,8 +214,14 @@ function tscApi ($http, $q, $filter,$sce) {
                 var thesis = mainFile.theses[listOfTheses[t]]; 
                 thesis['author'] = mainFile.authors[thesis['created_by']];
                 thesis['arrayIndex'] = t;
-                thesis['key'] = listOfTheses[t];   
-                theses.push(thesis);
+                thesis['vote_pro'] = pro;
+                thesis['vote_con'] = con;
+                thesis['vote_neutral'] = neutral;
+                thesis['vote_sum'] = sum;
+                thesis['key'] = listOfTheses[t];
+                var obj = {};
+                obj[listOfTheses[t]] = thesis;
+                theses.push( obj );
 
             }
             
