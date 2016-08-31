@@ -11,7 +11,7 @@ function tscMatrixViewCtrl($log, tscApi, $routeParams,$sce,$location,$anchorScro
 	vm.topicId = $routeParams.id;
 	
 	vm.bDebateSelected=false;	
-	vm.bShowArticleMatrix=false;
+	vm.bShowArticleMatrix=true;
 	vm.bShowArticle=false;
 	vm.bShowAuthor=false;
 	

@@ -11,11 +11,11 @@
 			</div>
 
 			<!-- debates overview - should be a own angular view for better 'back' button navigation in mobil -->
-	    	<div ng-repeat="(key, value) in vm.debates" ng-hide="vm.bDebateSelected">
+	    	<div ng-repeat="(key, val) in vm.debates" ng-hide="vm.bDebateSelected">
 
 				<div class="matrix-row" ng-click="vm.showArticlesMatrix(key)">
-					<div class="indicator-topic">{{value.topic_title}}</div>
-					<pd ng-mouseenter="vm.paintIndicator($event)">{{value.title}}</pd>
+					<div class="indicator-topic">{{val.topic_title}}</div>
+					<pd ng-mouseenter="vm.paintIndicator($event)">{{val.title}}</pd>
 				</div>
 			</div>
 		</div>
