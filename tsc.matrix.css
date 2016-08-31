@@ -28,6 +28,27 @@ body{
     display: block;
 }
 
+/* Google Droid Sans
+<link href='https://fonts.googleapis.com/css?family=Droid+Sans:700,400' rel='stylesheet' type='text/css'>
+
+latin */
+@font-face {
+  font-family: 'Droid Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Droid Sans'), local('DroidSans'), url(https://fonts.gstatic.com/s/droidsans/v6/s-BiyweUPV0v-yRb-cjciPk_vArhqVIZ0nv9q090hN8.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
+}
+/* latin */
+@font-face {
+  font-family: 'Droid Sans';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Droid Sans Bold'), local('DroidSans-Bold'), url(https://fonts.gstatic.com/s/droidsans/v6/EFpQQyG9GqCrobXxL-KRMYWiMMZ7xLd792ULpGE4W_Y.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
+}
+/*~ Google Droid Sans */
+
 @media(min-width: 1200px){
     /*.dp-page-wrapper{
         width: 1296px;
@@ -79,6 +100,18 @@ body{
     margin-right: auto;
 }*/
 
+button{
+    background-color: white;
+    border-style: hidden;
+    color: grey;
+}
+.button-bubble{
+    border-style: dotted;
+}
+.button-bubble:visited{
+    background-color: lightgrey;
+}
+
 #matrix{
     margin-top: 1em;
     width: 100%;
@@ -88,6 +121,8 @@ body{
     margin-top: 1em;
     width: 100%;
     height: 100%;
+    display: inline-block;
+    align-content: center;
 }
 
 #fade-left{
@@ -290,16 +325,14 @@ pie{
     margin: 2px;
 }
 .pie-pro {
-    background-color: green;
-    /*right: 0px;
-    //border: 2px solid green;*/
+    background-color: rgb(0,138,130);
 }
 .pie-container-con{
   transform:scaleX(-1);
   margin-top: 3em;
 }
 .pie-con {
-    background-color: red;
+    background-color: rgb(225,0,26);
 }
 
 .d3-tip{
@@ -308,4 +341,17 @@ pie{
     border-color: lightgrey;
     display: block;
     width: 40%;
+}
+.d3-tip-pro, .d3-tip-pro{
+    display: inline-block;
+}
+.d3-tip-img{
+    margin: 3px;
+    height: 60px; 
+    width: 50px;
+}
+.d3-tip-text{
+    margin-top, margin-bottom: 5em; 
+    font-size: 14px;
+    text-align: center;
 }

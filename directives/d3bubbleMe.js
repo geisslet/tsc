@@ -45,7 +45,7 @@ function d3bubbleMe($parse, tscApi){
 
          		console.log("newData");
          		console.log(newData);
-         		console.log(oldData);
+         		//console.log(oldData);
 
 
 	            var tip = d3.tip()
@@ -53,32 +53,65 @@ function d3bubbleMe($parse, tscApi){
 	              .offset([-10, 0])
 	              .html(function(d,i) {
 
-	              		var thesis = newData.theses[i];
+	              		var thesis = Object.values(newData.theses[Object.keys(newData.theses)[i]])[0];
 	                	//console.log(JSON.stringify(newData.theses[i]));
 	                	console.log(thesis);
 
-	                	var tip = "<h1>point "+i+"</h1>"+d;
-
-
+	                	var hmtl = "";
 
 	                	try{
-		                	tip = tip + "<br>" + thesis.text;
-		                	tip = tip + thesis.vote_pro;
-		                	tip = tip + "<hr>";
-		                	tip = tip + thesis.vote_con; 
+
+	                		// pro voters
+	                		var divProAuthors = "<div>";
+	                		var divProDots = "<pie-container class=\"pie-container-pro\">";
+	                		for (var a = 0; a <= thesis["vote_pro_authors"].length; a++) {
+	                			var author = Object.values(thesis["vote_pro_authors"])[a];
+	                			if (author === undefined)
+	                				break;
+
+	                			divProAuthors = divProAuthors + "<img class=\"d3-tip-img\" src=\"https://causa.tagesspiegel.de" + author.images.thumbnail+"\" alt=\""+author.first_name+" "+author.last_name+"\">";
+								divProDots = divProDots + "<pie class=\"pie-pro\"></pie>";
+	                		}
+	                		divProAuthors = divProAuthors + "</div>";
+	                		divProDots =  divProDots + "</pie-container>";
+	                		//~pro voters
+
+							hmtl = hmtl + "<div class=\"d3-tip-pro\">"+divProDots + divProAuthors+"</div>";
+		                	hmtl = hmtl + "<p class=\"d3-tip-text\">»" + thesis.text + "«</p>";
+		                	
+		                	// con voters
+	                		var divConAuthors = "<div>";
+	                		var divConDots = "<pie-container class=\"pie-container-con\">";
+	                		for (a = 0; a <= thesis["vote_con_authors"].length; a++) {
+	                			var author = Object.values(thesis["vote_con_authors"])[a];
+	                			if (author === undefined)
+	                				break;
+	                			divConAuthors = divConAuthors + "<img class=\"d3-tip-img\" src=\"https://causa.tagesspiegel.de"+author.images.thumbnail+"\" alt=\""+author.first_name+" "+author.last_name+"\">";
+								divConDots = divConDots + "<pie class=\"pie-con\"></pie>";
+	                		}
+	                		divConAuthors = divConAuthors + "</div>";
+	                		divConDots =  divConDots + "</pie-container>";
+							hmtl = hmtl + "<div class=\"d3-tip-con\">" + divConDots + divConAuthors +"</div>";
+							//~con voters
+		 
+
+
 		                	//tip =+ thesis["author"]["first_name"] + " " + thesis["author"]["last_name"];
 		                	//tip =+ "<img src='http://tagesspiegel/" +thesis["author"].images.portrait+"'' />";
 						}catch(err){
+							hmtl = hmtl + "<h3 style=\"color: red\">internal error - check console</h3>";
 							console.log(err);
 						}
 
 	                	try{
 	                		tscApi.dummycall();
-	                	}catch(err){console.log(err)}
+	                	}catch(err){
+	                		console.log(err);
+	                	}
 
 	                	//for (var thesis in newData.theses) {}
 	                
-	                    return tip; 
+	                    return hmtl; 
 	              });
 
 	            var dataset = newData.bubbles;// [[10, 10], [20, 20], [16, 0], [30, 12], [38, -30]];
@@ -88,21 +121,6 @@ function d3bubbleMe($parse, tscApi){
 
 	            canvas.selectAll("*").remove();
 
-
-	            // set the ranges
-	            // var xScale = d3.scaleLinear()
-	            //  .domain([0,d3.max(dataset)])
-	            //     .range([0, width]);
-
-	            // var yScale = d3.scaleLinear()
-	            //     .range([height, 0]);
-
-	            // adds the x and y axis
-
-	            /*d3.select(".axis")
-	                .call(d3.axisBottom(xScale))
-	                .call(d3.axisLeft(yScale));
-	            */
 
 	            var line = canvas.append("line")
 	                .attr("x1", 0)
@@ -114,6 +132,32 @@ function d3bubbleMe($parse, tscApi){
 	                .style("stroke-dasharray", ("2, 2"))
 	                .style("opacity", 0.2); 
 		            canvas.call(tip);
+
+		        var participateMin = d3.min(dataset, function(d) {    //Returns the participation on thesis
+				    					return d[0];  //References first value in each sub-array
+									  });
+
+		        var participateMax = d3.max(dataset, function(d) {    //Returns the participation on thesis
+				    					return d[0];  //References first value in each sub-array
+									  });
+
+		        var voteMin = d3.min(dataset, function(d) {    //Returns the participation on thesis
+				    					return d[1];  //References first value in each sub-array
+									  });
+
+		        var voteMax = d3.max(dataset, function(d) {    //Returns the participation on thesis
+				    					return d[1];  //References first value in each sub-array
+									  });
+
+		        console.log("participants min:"+participateMin+"|max:"+participateMax+", votes min:"+voteMin+"max:"+voteMax);
+
+	            var rscale = d3.scaleLinear()
+	            			.domain([participateMin,participateMax])
+  							.range([0,width]);
+
+  				console.log(rscale);
+
+  				console.log("max value of bubbles" + Math.max(dataset));
 
 	            var circles = canvas.selectAll(".circle")
 	                .data(dataset)
@@ -138,8 +182,8 @@ function d3bubbleMe($parse, tscApi){
 	                // .style("fill", "darkcyan")
 	                .style("stroke", "none");
 
-			});//~watch
+			}); //~watch
       	} //~link
-  	} //~directiveDefinitionObject
+  	}; //~directiveDefinitionObject
   	return directiveDefinitionObject;
 }//~d3bubbleMe

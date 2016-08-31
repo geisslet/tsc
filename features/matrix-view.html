@@ -1,28 +1,8 @@
 <div ng-controller="tscMatrixViewCtrl as vm" ng-init="vm.activate()">
     
-	
-	<!--ul class="dp-debate-statistics">
-		<li>
 
-			
-		</li>
-	</ul-->
-	<!--section id="content-meta">
-		<h3>
-			<!-i class="fa fa-comments" aria-hidden="true"></i->
-			<figure class="avatar avatar-lg">
-        		<img src="resources/favicon.svg" /> 
-   			</figure>
-   			{{Object.keys(vm.debates).length}} Debatten
-			
-			<!-figure class="avatar avatar-lg" data-initial="{{vm.debattes.length}}" style="background-color: #5764c6;"></figure   »« -> 
-		</h3>
-	</section-->
-
-
-    <section id="matrix">
-    
-    	<div>
+	<section id="debates" >
+		<div ng-show="!vm.bDebateSelected">
 
     		<!-- the moving indicator -->
     		<div id="indicator-debates" class="indicator" ng-style=vm.indicatorStyle ng-hide="vm.bDebateSelected">
@@ -38,12 +18,27 @@
 					<pd ng-mouseenter="vm.paintIndicator($event)">{{value.title}}</pd>
 				</div>
 			</div>
-
-			<!-- the selected debate -->
-			<div class="matrix-row" ng-show="vm.bDebateSelected" ng-click="vm.bDebateSelected = !vm.bDebateSelected">
-				{{vm.selectedDebate.title}}
-			</div>
 		</div>
+
+		<!-- the selected debate -->
+		<div ng-show="vm.bDebateSelected" >
+			
+			<div class="matrix-row" ng-show="vm.bDebateSelected" ng-click="vm.bDebateSelected = !vm.bDebateSelected">{{vm.selectedDebate.title}}</div>
+			
+			<button ng-hide="vm.bShowArticleMatrix && vm.bDebateSelected" ng-click="vm.bShowArticleMatrix=true;vm.bDebateSelected=true">
+				<i class="fa fa-angle-double-left" aria-hidden="true" ></i>matrix
+			</button>
+			
+			<button ng-show="vm.bShowArticleMatrix && vm.bDebateSelected" ng-click="vm.bShowArticleMatrix = false;;vm.bDebateSelected=true">
+				<i class="fa fa-angle-double-right" aria-hidden="true"></i>bubble
+			</button>
+
+		</div>
+	</section>
+
+	
+    <section id="matrix" ng-show='vm.bShowArticleMatrix && vm.bDebateSelected'>
+    
 		
 		<div ng-show="vm.bDebateSelected">
         	<div id="fade-left"></div>
@@ -69,26 +64,11 @@
 
 					<!-- the moving articles indicator -->
 		    		<div id="indicator-article" class="indicator" ng-style=vm.articleIndicatorStyle ng-show="vm.bDebateSelected">
-
-		    			<!-- ng-repeat="vm.bubbleData.bubbles.length"
-
-
-
-"
-"
-		    			-->
 						
 			
 						<div class="indicator-line" ng-style=vm.indicatorColor></div>
 						<pie-container class="pie-container-pro" ng-repeat="i in vm.voteProArrayFromNumberOfLastThesis()">
 							<pie class="pie-pro"></pie>
-						    <!--pie class="pie-pro"></pie>
-						    <pie class="pie-pro"></pie>
-						    <pie class="pie-pro"></pie>
-						    <pie class="pie-pro"></pie>
-						    <pie class="pie-pro"></pie>
-						    <pie class="pie-pro"></pie>
-						    <pie class="pie-pro"></pie-->
 						</pie-container>
 						<div class="indicator-highlight" ng-style="vm.articleIndicatorStyleHighlight"></div>
 
@@ -127,7 +107,12 @@
 
 	</section>
 
-	<section id="visual">
+	<section id="visual" ng-show='!vm.bShowArticleMatrix && vm.bDebateSelected'>
+		<div>
+			<button class="button-bubble">Artikel</button>
+			<button class="button-bubble">Autoren</button>
+			<button class="button-bubble" visited>Thesen</button>
+		</div>
 		<d3bubble-me class="bubble-chart" chart-data="vm.bubbleData"></d3bubble-me>
 	</section>
 		

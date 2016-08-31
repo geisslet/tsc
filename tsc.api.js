@@ -137,7 +137,7 @@ function tscApi ($http, $q, $filter,$sce) {
             */
             for(var k in vA){
                 vA[k].text = vA[k].text.replace(/data-id/gi, "id");
-                vA[k].text = vA[k].text.replace(/class=\"/gi, "ng-click=vm.showAlert($event) ng-mouseenter=vm.paintArticleIndicator($event) class=\"anchor ");
+                vA[k].text = vA[k].text.replace(/class=\"/gi, "ng-click=vm.paintArticleIndicator($event) ng-mouseenter=vm.paintArticleIndicator($event) class=\"anchor ");
                 vA[k]["text_trusted"] = $sce.trustAsHtml(vA[k].text);
                 vA[k]["theses"] = filterListToArray(mainFile.articles_theses, "article", k); 
             }
@@ -188,6 +188,9 @@ function tscApi ($http, $q, $filter,$sce) {
                 var con = 0;
                 var neutral = 0;
 
+                var proAuthors = [];
+                var conAuthors = [];
+
                 for(var v2 in v){
 
                     var vote = parseInt(v[v2]["vote"]) 
@@ -199,9 +202,11 @@ function tscApi ($http, $q, $filter,$sce) {
                             break;
                         case -1:
                             con=con+1;
+                            conAuthors.push(mainFile.authors[v[v2]["author"]]);
                             break;
                         case 1:
                             pro=pro+1;
+                            proAuthors.push(mainFile.authors[v[v2]["author"]]);
                             break;
                         default:
                             console.log(vote);
@@ -215,7 +220,9 @@ function tscApi ($http, $q, $filter,$sce) {
                 thesis['author'] = mainFile.authors[thesis['created_by']];
                 thesis['arrayIndex'] = t;
                 thesis['vote_pro'] = pro;
+                thesis['vote_pro_authors'] = proAuthors;
                 thesis['vote_con'] = con;
+                thesis['vote_con_authors'] = conAuthors;
                 thesis['vote_neutral'] = neutral;
                 thesis['vote_sum'] = sum;
                 thesis['key'] = listOfTheses[t];

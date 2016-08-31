@@ -9,10 +9,12 @@ function tscMatrixViewCtrl($log, tscApi, $routeParams,$sce,$location,$anchorScro
 	vm.articles = {};
 	vm.article = {};
 	vm.topicId = $routeParams.id;
-	vm.bDebateSelected=false;
-	vm.bShowArticleMatrix=true;
+	
+	vm.bDebateSelected=false;	
+	vm.bShowArticleMatrix=false;
 	vm.bShowArticle=false;
 	vm.bShowAuthor=false;
+	
 	vm.selectedDebate={};
 	vm.bubbleData = [];
 	vm.indicatorStyle={top: -1+'px'};
@@ -21,7 +23,7 @@ function tscMatrixViewCtrl($log, tscApi, $routeParams,$sce,$location,$anchorScro
 	vm.articleIndicatorStyle={top: -1+'px'};
 	vm.articleIndicatorStyleHighlight={};
 	vm.indicatorColor={ 'background-color': 'black' };
-	vm.lastThesisID = '';
+	vm.lastThesisID = undefined;
 	vm.lastThesisText = '';
 
 	vm.activate = function _activate(){
@@ -38,9 +40,6 @@ function tscMatrixViewCtrl($log, tscApi, $routeParams,$sce,$location,$anchorScro
 
 	};
 	
-	vm.setDebateSelected = function _setDebateSelected(){
-		vm.bDebateSelected=true;
-	};
 
 	vm.showArticlesMatrix = function _articleMatrix(debateId){
 		$log.debug("tscMatrixViewCtrl.showArticlesMatrix");
@@ -142,12 +141,12 @@ function tscMatrixViewCtrl($log, tscApi, $routeParams,$sce,$location,$anchorScro
 	};
 
 	vm.voteProArrayFromNumberOfLastThesis = function _voteProArrayFromNumber() {
-		console.log("voteProArrayFromNumberOfLastThesis lastThesisID: " + vm.lastThesisID);
+		//console.log("voteProArrayFromNumberOfLastThesis lastThesisID: '" + vm.lastThesisID +"'");
 
 		if (vm.lastThesisID === undefined)
 			return [];
 		
-		console.log("voteProArrayFromNumberOfLastThesis vm.bubbleData.theses[vm.lastThesisID]: " + JSON.stringify(vm.bubbleData.theses[vm.lastThesisID]));
+		//console.log("voteProArrayFromNumberOfLastThesis vm.bubbleData.theses[vm.lastThesisID]: " + JSON.stringify(vm.bubbleData.theses[vm.lastThesisID]));
 		if (vm.bubbleData.theses[vm.lastThesisID] === undefined)
 			return [];
 
@@ -156,12 +155,12 @@ function tscMatrixViewCtrl($log, tscApi, $routeParams,$sce,$location,$anchorScro
 
 	vm.voteConArrayFromNumberOfLastThesis = function _voteConArrayFromNumber() {
 
-		console.log("VoteConArrayFromNumberOfLastThesis lastThesisID: " + vm.lastThesisID);
+		//console.log("VoteConArrayFromNumberOfLastThesis lastThesisID: " + vm.lastThesisID);
 		if (vm.lastThesisID === undefined)
 			return [];
 
 
-		console.log("VoteConArrayFromNumberOfLastThesis vm.bubbleData.thesis[vm.lastThesisID]: " + JSON.stringify(vm.bubbleData.theses[vm.lastThesisID]));
+		//console.log("VoteConArrayFromNumberOfLastThesis vm.bubbleData.theses[vm.lastThesisID]: " + JSON.stringify(vm.bubbleData.theses[vm.lastThesisID]));
 
 		if (vm.bubbleData.theses[vm.lastThesisID] === undefined)
 			return [];
