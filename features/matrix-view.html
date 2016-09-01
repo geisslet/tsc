@@ -5,7 +5,7 @@
 		<div ng-show="!vm.bDebateSelected">
 
     		<!-- the moving indicator -->
-    		<div id="indicator-debates" class="indicator" ng-style=vm.indicatorStyle ng-hide="vm.bDebateSelected">
+    		<div id="indicator-debates" class="indicator" ng-style=vm.indicatorStyle>
 				<div class="indicator-line indicator-black"></div>
 				<div class="indicator-highlight indicator-black" ng-style=vm.indicatorStyleHighlight></div>
 			</div>
@@ -23,7 +23,10 @@
 		<!-- the selected debate -->
 		<div ng-show="vm.bDebateSelected" >
 			
-			<div class="matrix-row" ng-show="vm.bDebateSelected" ng-click="vm.bDebateSelected = !vm.bDebateSelected">{{vm.selectedDebate.title}}</div>
+			<div class="matrix-row" ng-show="vm.bDebateSelected" ng-click="vm.bDebateSelected = !vm.bDebateSelected">
+				<div class="indicator-topic">{{vm.selectedDebate.topic_title}}</div>
+				<pd>{{vm.selectedDebate.title}}</pd>
+			</div>
 			
 			<button ng-hide="vm.bShowArticleMatrix && vm.bDebateSelected" ng-click="vm.bShowArticleMatrix=true;vm.bDebateSelected=true">
 				<i class="fa fa-angle-double-left" aria-hidden="true" ></i>matrix
@@ -47,12 +50,12 @@
 	    		<div class="matrix-columns">
 	    			<div ng-repeat="(keyA, valueA) in vm.articles">
 						
-						<div class="matrix-column" ng-show="vm.bShowArticleMatrix" ng-mouseenter="vm.gotoAnchor()" ng-click="vm.showArticle(keyA, $event)">
+						<div class="matrix-column" ng-show="vm.bShowArticleMatrix" ng-mouseenter="vm.gotoAnchor()" ng-click="vm.showArticle(keyA, $event);bArticleRead = !bArticleRead" ng-class="{'matrix-column-read': bArticleRead}">
 								
 							<!--ng-bind-html figure class="avatar avatar-sm" ng-mouseover="vm.showAuthor()"></figure-->
 							<div class="dp-matrix-head">{{valueA.headline}}</div>
 							
-							<div class="dp-matrix-text" ng-mouseenter="vm.gotoAnchor()">
+							<div class="dp-matrix-text" ng-mouseenter="vm.gotoAnchor()" ng-class="{'dp-matrix-text-read': bArticleRead}">
 								<!--{{valueA.published.date}}
 								{{valueA.subheadline}}
 								{{valueA.teaser}}
@@ -63,17 +66,21 @@
 	    			</div>
 
 					<!-- the moving articles indicator -->
-		    		<div id="indicator-article" class="indicator" ng-style=vm.articleIndicatorStyle ng-show="vm.bDebateSelected">
+		    		<div id="indicator-article" class="indicator" ng-style=vm.articleIndicatorStyle ng-show="vm.bDebateSelected" ng-click="vm.bShowArticleMatrix = false;vm.bDebateSelected=true;">
 						
+						<!--
+						PRO:{{vm.bubbleData.theses[vm.lastThesisID].vote_pro}}
+						CON:{{vm.bubbleData.theses[vm.lastThesisID].vote_con}}
+						-->
 			
 						<div class="indicator-line" ng-style=vm.indicatorColor></div>
-						<pie-container class="pie-container-pro" ng-repeat="i in vm.voteProArrayFromNumberOfLastThesis()">
-							<pie class="pie-pro"></pie>
+						<pie-container class="pie-container-pro">
+							<pie class="pie-pro" id="pro_$index" ng-repeat="i in vm.arrayFromNumber(vm.bubbleData.theses[vm.lastThesisID].vote_pro) track by $index"></pie>
 						</pie-container>
 						<div class="indicator-highlight" ng-style="vm.articleIndicatorStyleHighlight"></div>
 
-						  <pie-container class="pie-container-con" ng-repeat="i in vm.voteConArrayFromNumberOfLastThesis()">
-						    <pie class="pie-con"></pie>
+						  <pie-container class="pie-container-con">
+						    <pie class="pie-con" id="con_$index" ng-repeat="i in vm.arrayFromNumber(vm.bubbleData.theses[vm.lastThesisID].vote_con) track by $index"></pie>
 						  </pie-container>
 
 						<div class="indicator-text">{{vm.lastThesisText}}</div>

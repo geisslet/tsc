@@ -45,17 +45,16 @@ function d3bubbleMe($parse, tscApi){
 
          		console.log("newData");
          		console.log(newData);
-         		//console.log(oldData);
-
 
 	            var tip = d3.tip()
 	              .attr("class", "d3-tip")
-	              .offset([-10, 0])
+	              .offset([-10, 100])
 	              .html(function(d,i) {
 
-	              		var thesis = Object.values(newData.theses[Object.keys(newData.theses)[i]])[0];
-	                	//console.log(JSON.stringify(newData.theses[i]));
-	                	console.log(thesis);
+	              		console.log(newData);
+
+	              		var thesisId = Object.keys(newData.theses)[i];
+						var thesis = newData.theses[thesisId];
 
 	                	var hmtl = "";
 
@@ -63,9 +62,14 @@ function d3bubbleMe($parse, tscApi){
 
 	                		// pro voters
 	                		var divProAuthors = "<div>";
-	                		var divProDots = "<pie-container class=\"pie-container-pro\">";
-	                		for (var a = 0; a <= thesis["vote_pro_authors"].length; a++) {
-	                			var author = Object.values(thesis["vote_pro_authors"])[a];
+	                		var divProDots = "<pie-container class=\"pie-container-pro\" style=\"position:inherit\">";
+	                		for (var a = 0; a <= thesis.vote_pro_authors.length; a++) {
+
+	                			//console.log(thesis.vote_pro_authors.length + " " + a);
+
+
+	                			//var author = Object.values(thesis["vote_pro_authors"])[a];
+	                			var author = thesis.vote_pro_authors[a];
 	                			if (author === undefined)
 	                				break;
 
@@ -76,14 +80,14 @@ function d3bubbleMe($parse, tscApi){
 	                		divProDots =  divProDots + "</pie-container>";
 	                		//~pro voters
 
-							hmtl = hmtl + "<div class=\"d3-tip-pro\">"+divProDots + divProAuthors+"</div>";
+							hmtl = hmtl + "<div class=\"d3-tip-pro\"><table><tr><th>" + divProDots + "</th><th>" + divProAuthors+"</th></tr><table></div>";
 		                	hmtl = hmtl + "<p class=\"d3-tip-text\">»" + thesis.text + "«</p>";
 		                	
 		                	// con voters
 	                		var divConAuthors = "<div>";
-	                		var divConDots = "<pie-container class=\"pie-container-con\">";
-	                		for (a = 0; a <= thesis["vote_con_authors"].length; a++) {
-	                			var author = Object.values(thesis["vote_con_authors"])[a];
+	                		var divConDots = "<pie-container class=\"pie-container-con\" style=\"position:inherit\">";
+	                		for (a = 0; a <= thesis.vote_con_authors.length; a++) {
+	                			var author = thesis.vote_con_authors[a];
 	                			if (author === undefined)
 	                				break;
 	                			divConAuthors = divConAuthors + "<img class=\"d3-tip-img\" src=\"https://causa.tagesspiegel.de"+author.images.thumbnail+"\" alt=\""+author.first_name+" "+author.last_name+"\">";
@@ -91,25 +95,21 @@ function d3bubbleMe($parse, tscApi){
 	                		}
 	                		divConAuthors = divConAuthors + "</div>";
 	                		divConDots =  divConDots + "</pie-container>";
-							hmtl = hmtl + "<div class=\"d3-tip-con\">" + divConDots + divConAuthors +"</div>";
+							hmtl = hmtl + "<div class=\"d3-tip-con\"><table><tr><th>" + divConDots + "</th><th>" + divConAuthors +"</th></tr><table></div>";
 							//~con voters
 		 
 
-
-		                	//tip =+ thesis["author"]["first_name"] + " " + thesis["author"]["last_name"];
-		                	//tip =+ "<img src='http://tagesspiegel/" +thesis["author"].images.portrait+"'' />";
 						}catch(err){
 							hmtl = hmtl + "<h3 style=\"color: red\">internal error - check console</h3>";
 							console.log(err);
 						}
 
 	                	try{
+	                		// just a test for calling angular controller function
 	                		tscApi.dummycall();
 	                	}catch(err){
 	                		console.log(err);
 	                	}
-
-	                	//for (var thesis in newData.theses) {}
 	                
 	                    return hmtl; 
 	              });

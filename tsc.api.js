@@ -162,7 +162,7 @@ function tscApi ($http, $q, $filter,$sce) {
 
             var votes = [];
             var bubbles = [];
-            var theses = [];
+            var theses = {};
 
             // 1. get all votes of debate
             var votesOfDebate = filterListToArray(mainFile.votes, "debate", debateId);
@@ -173,9 +173,9 @@ function tscApi ($http, $q, $filter,$sce) {
             var listOfTheses = [];
             for(var thesis in votesOfDebate) {
                 
-                if (listOfTheses.indexOf(votesOfDebate[thesis]["thesis"])<0){
+                if (listOfTheses.indexOf(votesOfDebate[thesis].thesis)<0){
                     //console.log("tscApi.getVotesDataOfDebate.listOfTheses new " + votesOfDebate[thesis]["thesis"]);
-                    listOfTheses.push(votesOfDebate[thesis]["thesis"]);
+                    listOfTheses.push(votesOfDebate[thesis].thesis);
                 }
 
             }
@@ -227,8 +227,9 @@ function tscApi ($http, $q, $filter,$sce) {
                 thesis['vote_sum'] = sum;
                 thesis['key'] = listOfTheses[t];
                 var obj = {};
-                obj[listOfTheses[t]] = thesis;
-                theses.push( obj );
+                //obj[listOfTheses[t]] = thesis;
+                //theses.push( obj );
+                theses[listOfTheses[t]] = thesis;
 
             }
             
