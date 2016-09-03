@@ -321,11 +321,14 @@ pie{
     body{
         font-size: 15px;
     }
-    pie-container{
+    pie-container{ 
       width:5px;
       display:block;
       position:absolute;
       right:2em;
+    }
+    .dp-matrix-head{
+        font-size: 14pt;
     }
 }
 
@@ -338,6 +341,9 @@ pie{
       display:block;
       position:absolute;
       right:1em;
+    }
+    .dp-matrix-head{
+        font-size: 12pt;
     }
 }
 
