@@ -336,7 +336,7 @@ pie{
 @media(max-width: 768px){
 */
     body{
-        font-size: 12px;
+        font-size: 20px;
     }
     pie-container{
       width:5px;
