@@ -304,7 +304,7 @@ pie{
 }
 
 /* screen resolution */
-@media(min-width: 1200px){
+@media(min-width: 993px){
     body{
         font-size: 17px;
     }
@@ -316,8 +316,9 @@ pie{
     }
 }
 
-@media(min-width: 992px){
 
+@media(max-width: 992px){
+/*
     body{
         font-size: 15px;
     }
@@ -333,6 +334,7 @@ pie{
 }
 
 @media(max-width: 768px){
+*/
     body{
         font-size: 12px;
     }
