@@ -360,21 +360,21 @@ pie{
         font-size: 40px;
     }
     .matrix-row{
-        font-size: 40pt;
+        font-size: 40px;
         line-height: 1.2em;
     }
     .dp-thesis{
-        font-size: 14pt;
+        font-size: 15px;
     }
     .dp-matrix-text{
-        font-size: 12pt;
+        font-size: 12px;
     }
     .dp-matrix-text-read{
-        font-size: 30pt;
+        font-size: 30px;
         line-height: 1.2em;
     }
     .dp-matrix-head{
-        font-size: 30pt;
+        font-size: 30px;
     }
     .d3-tip-text{
         font-size: 25px;
@@ -389,5 +389,7 @@ pie{
 
     .d3-tip{
         width: 100%;
+        position: relative;
+        left: 0px;
     }
 }
