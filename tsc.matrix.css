@@ -358,5 +358,22 @@ pie{
     .indicator-text{
         font-size: 25px;
     }
+    .matrix-row{
+        font-size: 30pt;
+    }
+    .dp-thesis{
+        font-size: 14pt;
+    }
+    .dp-matrix-text{
+        font-size: 12pt;
+    }
+    .dp-matrix-text-read{
+        font-size: 20pt;
+    }
+    .dp-matrix-head{
+        font-size: 25pt;
+    }
+    .d3-tip-text{
+        font-size: 20px;
+    }
 }
-
