@@ -370,7 +370,7 @@ pie{
         font-size: 12px;
     }
     .dp-matrix-text-read{
-        font-size: 30px;
+        font-size: 40px;
         /*line-height: 1.2em;*/
     }
     .dp-matrix-head{
@@ -389,7 +389,7 @@ pie{
 
     .d3-tip{
         width: 100%;
-        position: relative;
+        position: absolute;
         left: 0px;
     }
 }
