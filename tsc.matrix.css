@@ -179,7 +179,6 @@ button{
     /*padding: 2px;*/
     scroll-snap-coordinate: 50% 50%;
     scroll-snap-align: center none;
-
 }
 .matrix-column-read{
     width: 50em;
@@ -248,13 +247,14 @@ a, a:focus, a:hover {
     text-decoration: none;
 }
 
-
 /* the dots chart */
 pie-container{
   width:30px;
   display:block;
   position:absolute;
   right:5em;
+  background-color: white;
+  z-index: 1000;
 }
 .pie-container-pro{
   transform:scaleX(-1);
@@ -262,8 +262,8 @@ pie-container{
   transform:scaleY(-1);*/
 }
 pie{
-    width: 6px;
-    height: 6px;
+    width: 7px;
+    height: 7px;
     display: block;
     border-radius: 50%;
     float: left;
@@ -332,7 +332,7 @@ pie{
     }
 }
 
-@media(min-width: 768px){
+@media(max-width: 768px){
     body{
         font-size: 12px;
     }
@@ -344,6 +344,12 @@ pie{
     }
     .dp-matrix-head{
         font-size: 12pt;
+    }
+    .matrix-columns{
+        scroll-snap-points-x: repeat(20em);
+    }
+    .matrix-column{
+        width: 20em;
     }
 }
 
