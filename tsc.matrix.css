@@ -345,13 +345,13 @@ pie{
       right:1em;
     }
     .dp-matrix-head{
-        font-size: 20pt;
+        font-size: 20px;
     }
     .matrix-columns{
         scroll-snap-points-x: repeat(30em);
     }
     .matrix-column{
-        width: 40em;
+        width: 30em;
     }
     .indicator-topic{
         font-size: 20px;
@@ -361,7 +361,7 @@ pie{
     }
     .matrix-row{
         font-size: 40px;
-        line-height: 1.2em;
+        /*line-height: 1.2em;*/
     }
     .dp-thesis{
         font-size: 15px;
@@ -371,7 +371,7 @@ pie{
     }
     .dp-matrix-text-read{
         font-size: 30px;
-        line-height: 1.2em;
+        /*line-height: 1.2em;*/
     }
     .dp-matrix-head{
         font-size: 30px;
