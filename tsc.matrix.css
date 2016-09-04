@@ -380,10 +380,14 @@ pie{
         font-size: 25px;
     }
     pie{
-        width: 20px;
-        height: 20px;
+        width: 30px;
+        height: 30px;
     }
     button{
-        font-size: 30px;
+        font-size: 40px;
+    }
+
+    .d3-tip{
+        width: 100%;
     }
 }
