@@ -305,9 +305,7 @@ pie{
 
 /* screen resolution */
 @media(min-width: 993px){
-    body{
-        font-size: 17px;
-    }
+
     pie-container{
       width:30px;
       display:block;
@@ -336,7 +334,7 @@ pie{
 @media(max-width: 768px){
 */
     body{
-        font-size: 20px;
+        font-size: 15px;
     }
     pie-container{
       width:5px;
@@ -352,6 +350,12 @@ pie{
     }
     .matrix-column{
         width: 20em;
+    }
+    .indicator-topic{
+        font-size: 20px;
+    }
+    .indicator-text{
+        font-size: 25px;
     }
 }
 
