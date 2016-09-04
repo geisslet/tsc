@@ -335,6 +335,7 @@ pie{
 */
     body{
         font-size: 15px;
+        background-color: lightgreen;
     }
     pie-container{
       width:5px;
@@ -343,7 +344,7 @@ pie{
       right:1em;
     }
     .dp-matrix-head{
-        font-size: 12pt;
+        font-size: 20pt;
     }
     .matrix-columns{
         scroll-snap-points-x: repeat(20em);
